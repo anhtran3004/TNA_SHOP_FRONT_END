@@ -1,4 +1,6 @@
-import Logo from '../../assets/icons/logo';
+// import Logo from '../../assets/icons/logo';
+
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -6,9 +8,10 @@ const Footer = () => {
       <div className="container">
         <div className="site-footer__top">
           <div className="site-footer__description">
-            <h6><Logo /> <span>E</span>-Shop</h6>
-            <p>House My Brand designs clothing for the young, the old & everyone in between – but most 
-              importantly, for the fashionable</p>
+            <h6>
+              <Image src="/images/home/logo-tna-shop.png" width={56} height={38} />
+              SHOP</h6>
+            <p>TNA shop thiết kế quần áo cho giới trẻ, người già - nhưng quan trọng nhất là cho những người thời trang.</p>
             <ul className="site-footer__social-networks">
               <li><a href="#"><i className="icon-facebook"></i></a></li>
               <li><a href="#"><i className="icon-twitter"></i></a></li>
@@ -20,35 +23,35 @@ const Footer = () => {
 
           <div className="site-footer__links">
             <ul>
-              <li>Shopping online</li>
-              <li><a href="#">Order Status</a></li>
-              <li><a href="#">Shipping and Delivery</a></li>
-              <li><a href="#">Returns</a></li>
-              <li><a href="#">Payment options</a></li>
-              <li><a href="#">Contact Us</a></li>
+              <li>Mua hàng online</li>
+              <li><a href="#">Trạng thái đon hàng</a></li>
+              <li><a href="#">Vận chuyển và gia hàng</a></li>
+              <li><a href="#">Phẩn hối</a></li>
+              <li><a href="#">Phương thức thanh toán</a></li>
+              <li><a href="#">Liên hệ với chúng tôi</a></li>
             </ul>
             <ul>
-              <li>Information</li>
-              <li><a href="#">Gift Cards</a></li>
-              <li><a href="#">Find a store</a></li>
-              <li><a href="#">Newsletter</a></li>
-              <li><a href="#">Bacome a member</a></li>
-              <li><a href="#">Site feedback</a></li>
+              <li>Thông tin mở rộng</li>
+              <li><a href="#">Thẻ đổi quà</a></li>
+              <li><a href="#">Tìm kiếm của hàng offline</a></li>
+              <li><a href="#">Tin tức</a></li>
+              <li><a href="#">Trở thành thành viên</a></li>
+              <li><a href="#">Đến trang phản hồi</a></li>
             </ul>
             <ul>
               <li>Contact</li>
-              <li><a href="#">store@uikit.com</a></li>
-              <li><a href="#">Hotline: +1 131 138 138</a></li>
+              <li><a href="#">tnashop1234@gmail.com</a></li>
+              <li><a href="#">Hotline: +84 156 248 088</a></li>
             </ul>
           </div>
         </div>
       </div>
       
-      <div className="site-footer__bottom">
-        <div className="container">
-          <p>DESIGN BY ICEO.CO - © 2019. ALL RIGHTS RESERVED.</p>
-        </div>
-      </div>
+      {/*<div className="site-footer__bottom">*/}
+      {/*  <div className="container">*/}
+      {/*    <p>DESIGN BY ICEO.CO - © 2019. ALL RIGHTS RESERVED.</p>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </footer>
   )
 };
