@@ -25,7 +25,9 @@ export default class CustomDocument extends Document<DocumentProps> {
     return (
       <html lang="en">
         <Head>
-
+          {/*gg fonts*/}
+              <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap"
+                    rel="stylesheet"/>
           {/* We only want to add the scripts if in production */}
           {isProduction && (
             <Fragment>
