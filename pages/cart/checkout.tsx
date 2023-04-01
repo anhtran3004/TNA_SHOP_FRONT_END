@@ -28,12 +28,12 @@ const CheckoutPage = () => {
           <div className="checkout-content">
             <div className="checkout__col-6">
               <div className="checkout__btns">
-                <button className="btn btn--rounded btn--yellow">Log in</button>
-                <button className="btn btn--rounded btn--border">Sign up</button>
+                <button className="btn btn--rounded btn--yellow">Đăng nhập</button>
+                <button className="btn btn--rounded btn--border">Đăng ký</button>
               </div>
 
               <div className="block">
-                <h3 className="block__title">Shipping information</h3>
+                <h3 className="block__title">Thông tin giao hàng</h3>
                 <form className="form">
                   <div className="form__input-row form__input-row--two">
                     <div className="form__col">
@@ -74,6 +74,8 @@ const CheckoutPage = () => {
                       <div className="select-wrapper select-form">
                         <select>
                           <option>Country</option>
+                          <option value="VietNam">VietNam</option>
+                          <option value="China">China</option>
                           <option value="Argentina">Argentina</option>
                         </select>
                       </div>
@@ -85,7 +87,7 @@ const CheckoutPage = () => {
             
             <div className="checkout__col-4">
               <div className="block">
-                <h3 className="block__title">Payment method</h3>
+                <h3 className="block__title">Phương thức thanh toán</h3>
                 <ul className="round-options round-options--three">
                   <li className="round-item">
                     <img src="/images/logos/paypal.png" alt="Paypal" />
@@ -109,7 +111,7 @@ const CheckoutPage = () => {
               </div>
               
               <div className="block">
-                <h3 className="block__title">Delivery method</h3>
+                <h3 className="block__title">Hình thức vận chuyển</h3>
                 <ul className="round-options round-options--two">
                   <li className="round-item round-item--bg">
                     <img src="/images/logos/inpost.svg" alt="Paypal" />
@@ -133,11 +135,11 @@ const CheckoutPage = () => {
             
             <div className="checkout__col-2">
               <div className="block">
-                <h3 className="block__title">Your cart</h3>
+                <h3 className="block__title">Giỏ hàng của bạn</h3>
                 <CheckoutItems />
                 
                 <div className="checkout-total">
-                  <p>Total cost</p>
+                  <p>Tổng thanh toán</p>
                   <h3>${priceTotal}</h3>
                 </div>
               </div>
@@ -145,10 +147,10 @@ const CheckoutPage = () => {
           </div>
           
           <div className="cart-actions cart-actions--checkout">
-            <a href="/cart" className="cart__btn-back"><i className="icon-left"></i> Back</a>
+            <a href="/cart" className="cart__btn-back"><i className="icon-left"></i> Trở về</a>
             <div className="cart-actions__items-wrapper">
-              <button type="button" className="btn btn--rounded btn--border">Continue shopping</button>
-              <button type="button" className="btn btn--rounded btn--yellow">Proceed to payment</button>
+              <button type="button" className="btn btn--rounded btn--border">Tiếp tục mua sắm</button>
+              <button type="button" className="btn btn--rounded btn--yellow">Tiến hành thanh toán</button>
             </div>
           </div>
         </div>
