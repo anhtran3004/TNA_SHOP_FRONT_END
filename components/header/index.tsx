@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import useOnClickOutside from 'use-onclickoutside';
-import Logo from '../../assets/icons/logo';
+// import Logo from '../../assets/icons/logo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { RootState } from 'store';
+import Image from "next/image";
 
 type HeaderType = {
   isErrorPage?: Boolean;
@@ -56,7 +57,9 @@ const Header = ({ isErrorPage }: HeaderType) => {
     <header className={`site-header ${!onTop ? 'site-header--fixed' : ''}`}>
       <div className="container">
         <Link href="/">
-          <a><h1 className="site-logo"><Logo />TNA</h1></a>
+          <a><h1 className="site-logo">
+            <Image src="/images/home/logo-tna-shop.png" alt="" width={112} height={72}/>
+            TNA SHOP</h1></a>
         </Link>
         <nav ref={navRef} className={`site-nav ${menuOpen ? 'site-nav--open' : ''}`}>
           <Link href="/products">
