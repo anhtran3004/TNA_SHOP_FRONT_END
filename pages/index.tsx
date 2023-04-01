@@ -3,36 +3,14 @@ import PageIntro from '../components/page-intro';
 import ProductsFeatured from '../components/products-featured';
 import Footer from '../components/footer';
 import Subscribe from '../components/subscribe';
+import {BlogInHome} from "../components/Home/BlogInHome";
 
 const IndexPage = () => {
   return (
     <Layout>
-      <PageIntro />
+      <PageIntro/>
 
-      <section className="featured">
-        <div className="container">
-          <article style={{backgroundImage: 'url(/images/featured-1.jpg)'}} className="featured-item featured-item-large">
-            <div className="featured-item__content">
-              <h3>New arrivals are now in!</h3>
-              <a href="#" className="btn btn--rounded">Show Collection</a>
-            </div>
-          </article>
-          
-          <article style={{backgroundImage: 'url(/images/featured-2.jpg)'}} className="featured-item featured-item-small-first">
-            <div className="featured-item__content">
-              <h3>Basic t-shirts $29,99</h3>
-              <a href="#" className="btn btn--rounded">More details</a>
-            </div>
-          </article>
-          
-          <article style={{backgroundImage: 'url(/images/featured-3.jpg)'}} className="featured-item featured-item-small">
-            <div className="featured-item__content">
-              <h3>Sale this summer</h3>
-              <a href="#" className="btn btn--rounded">VIEW ALL</a>
-            </div>
-          </article>
-        </div>
-      </section>
+      <BlogInHome/>
 
       <section className="section">
         <div className="container">
@@ -48,7 +26,7 @@ const IndexPage = () => {
                 <p>All purchases over $199 are eligible for free shipping via USPS First Class Mail.</p>
               </div>
             </li>
-            
+
             <li>
               <i className="icon-payment"></i>
               <div className="data-item__content">
@@ -56,16 +34,16 @@ const IndexPage = () => {
                 <p>All payments are processed instantly over a secure payment protocol.</p>
               </div>
             </li>
-            
+
             <li>
               <i className="icon-cash"></i>
               <div className="data-item__content">
                 <h4>Money-Back Guarantee</h4>
                 <p>If an item arrived damaged or you've changed your mind, you can send it
-                back for a full refund.</p>
+                  back for a full refund.</p>
               </div>
             </li>
-            
+
             <li>
               <i className="icon-materials"></i>
               <div className="data-item__content">
@@ -77,9 +55,9 @@ const IndexPage = () => {
         </div>
       </section>
 
-      <ProductsFeatured />
-      <Subscribe />
-      <Footer />
+      <ProductsFeatured/>
+      <Subscribe/>
+      <Footer/>
     </Layout>
   )
 }
