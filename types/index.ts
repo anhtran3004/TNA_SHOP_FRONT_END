@@ -57,3 +57,10 @@ export type GtagEventType = {
   label: string;
   value: string
 }
+export type Category = {
+  id: string,
+  categoryName: string,
+  sku: string,
+  status: number
+
+}

@@ -7,14 +7,14 @@ const RegisterPage = () => (
       <div className="container">
         <div className="back-button-section">
           <Link href="/products">
-            <a><i className="icon-left"></i> Back to store</a>
+            <a><i className="icon-left"></i> Trở lại mua hàng</a>
           </Link>
         </div>
 
         <div className="form-block">
-          <h2 className="form-block__title">Create an account and discover the benefits</h2>
-          <p className="form-block__description">Lorem Ipsum is simply dummy text of the printing 
-          and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+          <h2 className="form-block__title">Tạo tài khoản và khám phá tiện ích</h2>
+          <p className="form-block__description">Tiến hành đăng ký một tài khoản để trở thành khách hàng
+          thân thiết của chúng tôi.</p>
           
           <form className="form">
             <div className="form__input-row">
@@ -38,16 +38,16 @@ const RegisterPage = () => (
                 <label htmlFor="check-signed-in" className={`checkbox checkbox--sm`}>
                   <input name="signed-in" type="checkbox" id="check-signed-in" />
                   <span className="checkbox__check"></span>
-                    <p>I agree to the Google Terms of Service and Privacy Policy</p>
+                    <p>Tôi đồng ý với Điều khoản dịch vụ và Chính sách bảo mật của Google</p>
                 </label>
               </div>
             </div>
 
-            <button type="button" className="btn btn--rounded btn--yellow btn-submit">Sign up</button>
+            <button type="button" className="btn btn--rounded btn--yellow btn-submit">Đăng ký</button>
 
             <p className="form__signup-link">
               <Link href="/login">
-                <a href="#">Are you already a member?</a>
+                <a href="#">Bạn đã là thành viên chưa?</a>
               </Link>
             </p>
           </form>
