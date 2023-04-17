@@ -893,6 +893,8 @@ h1,h2,h3,h4,h5 {
     }
     .product__price {
       display: flex;
+      text-decoration: line-through;
+      font-size: 14px;
       h4 {
         font-weight: 400;
         font-size: 15px;

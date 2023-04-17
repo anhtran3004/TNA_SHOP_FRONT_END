@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { some } from 'lodash';
 import { addProduct } from 'store/reducers/cart';
 import { toggleFavProduct } from 'store/reducers/user';
-import {ProductType, ProductStoreType, Product, Inventory} from 'types';
+import {ProductType, ProductStoreType, Product, Inventory, Discount} from 'types';
 import { RootState } from 'store';
 import {getColors, getInventories, getSizes} from "../../../lib/API";
 import {useRouter} from "next/router";
+import {getListDiscounts} from "../../../lib/Discount/API";
+import {GetDataDefaultDiscount} from "../../product-item";
 
 type ProductContent = {
   product: Product;
@@ -31,7 +33,7 @@ const Content = (props: ProductContent) => {
   const { favProducts } = useSelector((state: RootState) => state.user);
   const isFavourite = some(favProducts, productId => productId === props.product.id);
   const [colorSelected, setColorSelected] = useState("");
-
+  const [discount, setDiscount] = useState<Discount>(GetDataDefaultDiscount())
   async function fetchInventory() {
     try {
       // console.log("id", id);
@@ -54,9 +56,25 @@ const Content = (props: ProductContent) => {
       console.log('error');
     }
   }
+  async function fetchDataDiscount(){
+    try{
+      const res = await getListDiscounts();
+      if(res.code === 200){
+        for (let i = 0; i < res.data.length; i++){
+          if(res.data[i].id === props.product.discount_id){
+            setDiscount(res.data[i]);
+          }
+        }
+      }
+    }catch (e) {
+      console.log('error')
+    }
+  }
+
   useEffect(() =>{
     fetchInventory().then()
     fetchListColor().then();
+    // fetchDataDiscount().then();
   }, [id])
   async function fetchListSize(){
     try {
@@ -93,7 +111,17 @@ const Content = (props: ProductContent) => {
 
     dispatch(addProduct(productStore));
   }
-
+  function calculateDiscount(){
+    if(discount?.discount_type === "%"){
+      const priceCurrent = (props.product.price - props.product.price * discount.discount_value/ 100);
+      return priceCurrent;
+    }
+    if(discount?.discount_type === "VND"){
+      const priceCurrent = props.product.price - discount.discount_value;
+      return priceCurrent;
+    }
+    return props.product.price;
+  }
   return (
     <section className="product-content">
       <div className="product-content__intro">
@@ -106,10 +134,28 @@ const Content = (props: ProductContent) => {
           {/*{product.discount &&*/}
           {/*  <span>${ product.price }</span>*/}
           {/*}*/}
-          <h4>{props.product.price.toLocaleString("vi-VN", {
-            style: "currency",
-            currency:"VND"
-          })}</h4>
+          {/*<h4>{props.product.price.toLocaleString("vi-VN", {*/}
+          {/*  style: "currency",*/}
+          {/*  currency:"VND"*/}
+          {/*})}</h4>*/}
+          {(discount && discount.discount_value !== 0) ? <>
+                <h4>{calculateDiscount().toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency:"VND"
+                })}</h4>
+            <div>
+                <div className={"product__price " + (discount ? 'product__price--discount' : '')} >{props.product.price.toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency:"VND"
+                })}</div>
+            </div>
+              </> :
+              <>
+                <h4>{props.product.price.toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency:"VND"
+                })}</h4>
+              </>}
         </div>
       </div>
 

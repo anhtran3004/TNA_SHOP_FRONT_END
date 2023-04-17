@@ -39,6 +39,7 @@ const ProductsContent = () => {
         <section className="products-list">
           {products.map((item, index)  => (
             <ProductItem
+                key={index}
               product={item}
             />
           ))}

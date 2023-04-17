@@ -108,3 +108,9 @@ export type Inventory ={
   color_id: number,
   product_id: number
 }
+export type Discount = {
+  id: number,
+  discount_code: string,
+  discount_type: string,
+  discount_value: number
+}
