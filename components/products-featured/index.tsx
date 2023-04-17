@@ -13,7 +13,7 @@ const ProductsFeatured = () => {
           <a href="/products" className="btn btn--rounded btn--border">Xem tất cả</a>
         </header>
 
-        <ProductsCarousel products={data} />
+        <ProductsCarousel />
       </div>
     </section>
   )

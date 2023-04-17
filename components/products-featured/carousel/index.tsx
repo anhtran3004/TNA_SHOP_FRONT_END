@@ -1,9 +1,11 @@
 import ProductItem from './../../product-item';
-import { ProductTypeList } from 'types';
+import {InputProduct, ProductTypeList, Product} from 'types';
+
 
 // import Swiper core and required components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {getListProduct} from "../../../lib/API";
 
 let slidesPerView = 1.3;
 let centeredSlides = true;
@@ -24,8 +26,50 @@ if (process.browser) {
 type ProductsCarouselType = {
   products: ProductTypeList[]
 }
+export function dataInputProduct(): InputProduct {
+  const data = {
+    filter: {
+      product_id: [],
+      category_id: [],
+      price: {
+        min: 0,
+        max: 10000000
+      }
+    },
+    sort: {
+      field: "priority",
+      order: "DESC"
+    },
+    pagination: {
+      page: 0,
+      perPage: 1000
+    }
+  }
+  return data;
+}
+const ProductsCarousel = () => {
+  const [products, setProducts] = useState<Product[]>([])
+  useEffect(() =>{
+    async function fetchProductData() {
+      try {
+        const res = await getListProduct(dataInputProduct())
+        const status = res.code;
+        if (status === 200) {
+          for(let i = 0; i < res.data.length; i++){
+            if(res.data[i].hot === 1)
+              setProducts((prev) => [...prev,res.data[i]]);
+          }
 
-const ProductsCarousel = ({ products }: ProductsCarouselType) => {
+        } else {
+          console.log('error');
+        }
+      } catch (e) {
+        console.log('error');
+      }
+    }
+    // console.log("statusUpdate", statusUpdate);
+    fetchProductData().then();
+  }), []
   if (!products) return <div>Loading</div>;
 
   return (
@@ -40,14 +84,7 @@ const ProductsCarousel = ({ products }: ProductsCarouselType) => {
         {products.map(item => (
           <SwiperSlide key={item.id}>
             <ProductItem 
-              id={item.id} 
-              name={item.name}
-              price={item.price}
-              color={item.color}
-              discount={item.discount}
-              currentPrice={item.currentPrice}
-              key={item.id}
-              images={item.images} 
+              product={item}
             />
           </SwiperSlide>
         ))}

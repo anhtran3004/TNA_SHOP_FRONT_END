@@ -1,30 +1,45 @@
 import useSwr from 'swr';
 import ProductItem from '../../product-item';
 import ProductsLoading from './loading';
-import { ProductTypeList } from 'types';
+import {Product, ProductTypeList} from 'types';
+import {useEffect, useState} from "react";
+import {getListProduct} from "../../../lib/API";
+import {dataInputProduct} from "../../products-featured/carousel";
+import {dataOutputProduct} from "../../../pages/product";
 
 const ProductsContent = () => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSwr('/api/products', fetcher);
-
-  if (error) return <div>Failed to load users</div>;
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  // const { data, error } = useSwr('/api/products', fetcher);
+  const [products, setProducts] = useState<Product[]>([])
+  useEffect(() =>{
+    async function fetchProductData() {
+      try {
+        const res = await getListProduct(dataInputProduct())
+        const status = res.code;
+        if (status === 200) {
+          setProducts(res.data);
+        } else {
+          console.log('error');
+        }
+      } catch (e) {
+        console.log('error');
+      }
+    }
+    // console.log("statusUpdate", statusUpdate);
+    fetchProductData().then();
+  }), []
+  // if (error) return <div>Failed to load users</div>;
   return (
     <>
-      {!data && 
-        <ProductsLoading />
-      }
+      {/*{!data && */}
+      {/*  <ProductsLoading />*/}
+      {/*}*/}
 
-      {data &&
+      {products &&
         <section className="products-list">
-          {data.map((item: ProductTypeList)  => (
-            <ProductItem 
-              id={item.id} 
-              name={item.name}
-              price={item.price}
-              color={item.color}
-              currentPrice={item.currentPrice}
-              key={item.id}
-              images={item.images} 
+          {products.map((item, index)  => (
+            <ProductItem
+              product={item}
             />
           ))}
         </section>

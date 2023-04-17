@@ -1,15 +1,19 @@
+import {Dispatch, SetStateAction} from "react";
+
 type CheckboxColorType = {
 	type?: string;
 	name: string;
   color: string;
   valueName: string;
-	onChange?: (value: string) => void;
+  onChange?: (value: string) => void;
+  setColorSelected: Dispatch<SetStateAction<string>>
 }
 
-const CheckboxColor = ({ color, name, type = 'checkbox', onChange, valueName }: CheckboxColorType) => {
+const CheckboxColor = ({ color, name, type = 'checkbox', onChange, valueName, setColorSelected }: CheckboxColorType) => {
   const onSelect = (e: any) => {
     if(onChange) {
       onChange(e.target.getAttribute('data-name'));
+      setColorSelected(e.target.getAttribute('data-name'));
     }
   }
 
