@@ -47,10 +47,10 @@ const ProductItem = (props: Props) => {
             }
         }
         fetchDataDiscount().then();
-    }, [])
-    useEffect(() =>{
-        console.log("discount", discount);
-    }, [discount])
+    }, [props.product.id])
+    // useEffect(() =>{
+    //     console.log("discount", discount);
+    // }, [discount])
     function calculateDiscount(){
       if(discount?.discount_type === "%"){
           const priceCurrent = (props.product.price - props.product.price * discount.discount_value/ 100);

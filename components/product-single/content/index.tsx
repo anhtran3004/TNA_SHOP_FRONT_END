@@ -163,9 +163,9 @@ const Content = (props: ProductContent) => {
         <div className="product-filter-item">
           <h5>Color:</h5>
           <div className="checkbox-color-wrapper">
-            {colors.map(type => (
+            {colors.map((type, index) => (
               <CheckboxColor 
-                key={type.id} 
+                key={index}
                 type={'radio'} 
                 name="product-color" 
                 color={type.name}
@@ -182,8 +182,8 @@ const Content = (props: ProductContent) => {
             <div className="select-wrapper">
               <select onChange={onSelectChange}>
                 <option>Choose size</option>
-                {sizes.map(type => (
-                  <option value={type.size}>{type.size}</option>
+                {sizes.map((type, index) => (
+                  <option key={index} value={type.size}>{type.size}</option>
                 ))}
               </select>
             </div>
