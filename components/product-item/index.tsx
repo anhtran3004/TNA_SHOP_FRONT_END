@@ -85,7 +85,7 @@ const ProductItem = (props: Props) => {
                   style: "currency",
                   currency:"VND"
               })}</h4>
-          <div className={"product__price " + (discount ? 'product__price--discount' : '')} >{props.product.price.toLocaleString("vi-VN", {
+          <div style={{marginTop: "10px"}} className={"product__price " + (discount ? 'product__price--discount' : '')} >{props.product.price.toLocaleString("vi-VN", {
               style: "currency",
               currency:"VND"
           })}</div>

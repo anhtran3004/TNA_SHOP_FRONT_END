@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import List from './list';
-
-const ProductsContent = () => {
+import {Product} from "../../types";
+interface Props{
+  product: Product[]
+}
+const ProductsContent = (props: Props) => {
   const [orderProductsOpen, setOrderProductsOpen] = useState(false);
   
   return (
     <section className="products-content">
       <div className="products-content__intro">
-        <h2>Men's Tops <span>(133)</span></h2>
+        <h2>Total Products<span>({props.product.length})</span></h2>
         <button type="button" onClick={() => setOrderProductsOpen(!orderProductsOpen)} className="products-filter-btn"><i className="icon-filters"></i></button>
         <form className={`products-content__filter ${orderProductsOpen ? 'products-order-open' : ''}`}>
           <div className="products__filter__select">
@@ -29,7 +32,7 @@ const ProductsContent = () => {
         </form>
       </div>
 
-      <List />
+      <List product={props.product}/>
     </section>
   );
 };

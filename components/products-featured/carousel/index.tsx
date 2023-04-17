@@ -1,19 +1,22 @@
 import ProductItem from './../../product-item';
 import {InputProduct, ProductTypeList, Product} from 'types';
-
-
 // import Swiper core and required components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {getListProduct} from "../../../lib/API";
 
 let slidesPerView = 1.3;
 let centeredSlides = true;
 let spaceBetween = 30;
 if (process.browser) {
-  if(window.innerWidth > 768) {
+  if(window.innerWidth > 568) {
+    slidesPerView = 2;
+    spaceBetween = 15;
+    centeredSlides = false;
+  }
+  if(window.innerWidth > 800) {
     slidesPerView = 3;
-    spaceBetween = 35;
+    spaceBetween = 15;
     centeredSlides = false;
   }
   if(window.innerWidth > 1024) {
@@ -76,10 +79,11 @@ const ProductsCarousel = () => {
     <div className="products-carousel containers">
       <Swiper 
       spaceBetween={spaceBetween} 
-      loop={true} 
+      // loop={true}
       centeredSlides={centeredSlides} 
       watchOverflow={true} 
-      slidesPerView={slidesPerView} 
+      slidesPerView={slidesPerView}
+      // onAutoplayTimeLeft={onAutoplayTimeLeft}
       className="swiper-wrapper">
         {products.map((item, index) => (
           <SwiperSlide key={index}>
