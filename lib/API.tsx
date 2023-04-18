@@ -1,6 +1,6 @@
 import {InputProduct} from "../types";
 import process from "process";
-function GetARBaseUrl(): string {
+export function GetARBaseUrl(): string {
     const url = process.env.NEXT_PUBLIC_BASE_URL;
     if (url === undefined) return "https://a969-27-72-146-175.ngrok-free.app";
     return url
@@ -22,6 +22,9 @@ export async function getListProduct(filter: InputProduct){
     try{
         const url_getListProduct = GetARBaseUrl() + "/api/v1/product/";
         const fetchData = {
+            headers:{
+                "Content-Type": "application/json"
+            },
             method: 'POST',
             body: JSON.stringify(filter)
         }

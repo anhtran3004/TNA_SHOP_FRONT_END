@@ -114,3 +114,13 @@ export type Discount = {
   discount_type: string,
   discount_value: number
 }
+export type Campaign = {
+  id: number,
+  name: string,
+  sku: string,
+  thumb: string,
+  start_day: string,
+  end_day: string,
+  status: number,
+  campaign_description: string
+}

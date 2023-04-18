@@ -1,44 +1,49 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {EffectFade, Navigation} from 'swiper';
+import {useEffect, useState} from "react";
+import {getListCampaign} from "../../lib/Campaign/API";
+import {Campaign} from "../../types";
+import Link from "next/link";
 
 SwiperCore.use([EffectFade, Navigation]);
 
 const PageIntro = () => {
+  const [campaigns, setCampaigns] = useState<Campaign[]>([])
+  useEffect(() => {
+    async function fetchCampaignData() {
+      try {
+        const res = await getListCampaign()
+        const status = res.code;
+        if (status === 200) {
+          setCampaigns(res.data);
+        } else {
+          console.log('error');
+        }
+      } catch (e) {
+        console.log('error');
+      }
+    }
 
+    fetchCampaignData().then();
+  }, [])
   return (
     <section className="page-intro">  
       <Swiper navigation effect="fade" className="swiper-wrapper">
-        <SwiperSlide>
-          <div className="page-intro__slide" style={{ backgroundImage: "url('/images/slide-1.jpg')" }}>
-            <div className="container">
-              <div className="page-intro__slide__content">
-                <h2>Bộ sưu tập mùa hè</h2>
-                <a href="#" className="btn-shop"><i className="icon-right"></i>Mua ngay</a>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
+        {campaigns.map((cam, index) =>(
+            <SwiperSlide key={index}>
+              <div className="page-intro__slide" style={{ backgroundImage: `url(${cam.thumb})` }}>
+                <div className="container">
+                  <div className="page-intro__slide__content">
+                    <h2>{cam.name}</h2>
+                    <Link href={'/campaign/?sku=' + cam.sku} legacyBehavior>
+                      <a className="btn-shop"><i className="icon-right"></i>Mua ngay</a>
+                    </Link>
 
-        <SwiperSlide>
-          <div className="page-intro__slide" style={{ backgroundImage: "url('/images/slide-2.jpg')" }}>
-            <div className="container">
-              <div className="page-intro__slide__content">
-                <h2>Bộ sưu tập mặc tại nhà</h2>
-                <a href="#" className="btn-shop"><i className="icon-right"></i>Shop now</a>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="page-intro__slide" style={{ backgroundImage: "url('/images/home/banner1.jpg')" }}>
-            <div className="container">
-              <div className="page-intro__slide__content">
-                <h2>Bộ sưu tập thể thao</h2>
-                <a href="#" className="btn-shop"><i className="icon-right"></i>Shop now</a>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
+            </SwiperSlide>
+        ))}
       </Swiper>
 
       <div className="shop-data">

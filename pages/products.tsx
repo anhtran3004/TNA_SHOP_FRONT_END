@@ -6,13 +6,33 @@ import ProductsContent from '../components/products-content';
 import {useEffect, useState} from "react";
 import {InputProduct, Product} from "../types";
 import {getListProduct} from "../lib/API";
-import {dataInputProduct} from "../components/products-featured/carousel";
+
 import Modal from "../components/Modal/Modal";
 import ErrorAlert from "../components/Alert/ErrorAlert"
-
+export function dataInputProducts(){
+    const data: InputProduct = {
+        filter: {
+            product_id: [],
+            category_id: [],
+            price: {
+                min: 0,
+                max: 10000000
+            }
+        },
+        sort: {
+            field: "id",
+            order: "DESC"
+        },
+        pagination: {
+            page: 0,
+            perPage: 1000
+        }
+    }
+    return data;
+}
 const Products = () => {
     const [products, setProducts] = useState<Product[]>([])
-    const [filterProduct, setFilterProduct] = useState<InputProduct>(dataInputProduct());
+    const [filterProduct, setFilterProduct] = useState<InputProduct>(dataInputProducts());
     const [isOpenAlert, setIsOPenAlert] = useState(false);
     const [textErrorAPI, setTextErrorAPI] = useState("");
     useEffect(() =>{
@@ -33,17 +53,24 @@ const Products = () => {
         }
         // console.log("statusUpdate", statusUpdate);
         fetchProductData().then();
+        console.log("filterProduct", filterProduct);
     }, [filterProduct])
+    useEffect(() => {
+        console.log(products);
+    }, [products])
     return <>
         <Layout>
             <Breadcrumb/>
             <section className="products-page">
                 <div className="container">
                     <ProductsFilter filterProduct={filterProduct} setFilterProduct={setFilterProduct}/>
-                    <ProductsContent product={products}/>
+                    <ProductsContent product={products} filterProduct={filterProduct} setFilterProduct={setFilterProduct}/>
                 </div>
             </section>
-            <Footer/>
+            <div>
+                <Footer/>
+            </div>
+
         </Layout>
         {isOpenAlert && (
             <Modal>
