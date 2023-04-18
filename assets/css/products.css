@@ -1,0 +1,12 @@
+.gender-option-item{
+    border: 1px solid black;
+    width: 100%;
+    padding: 15px;
+}
+.gender-option-item-active{
+    border: 1px solid white;
+    width: 100%;
+    padding: 15px;
+    background-color: black;
+    color: white;
+}
