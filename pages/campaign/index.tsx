@@ -105,23 +105,9 @@ export default function CampaignPage(){
     }, [filterProduct])
     return<>
         <Layout>
-            {/*<div className="header-campaign">*/}
-            {/*    <Image src="" alt="" layout="fill" objectFit="contain"*/}
-            {/*           objectPosition="center" />*/}
-            {/*    <h1></h1>*/}
-            {/*</div>*/}
-            {/*<div className="page-intro__slide" style={{ backgroundImage: `url(${campaignSelected.thumb})`, backgroundRepeat: "no-repeat",backgroundSize: "auto", width:"100%", height: '500px' }}>*/}
-            {/*    <div className="container">*/}
-            {/*        <div className="page-intro__slide__content">*/}
-            {/*            <h2>{campaignSelected.name}</h2>*/}
-            {/*            /!*<Link href={'/campaign/?sku=' + campaignSelected.sku} legacyBehavior>*!/*/}
-            {/*            /!*    <a className="btn-shop"><i className="icon-right"></i>Mua ngay</a>*!/*/}
-            {/*            /!*</Link>*!/*/}
-
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+            <h1 className="container title-campaign">{campaignSelected.name}</h1>
             <div className="banner-campaign container">
+
                 <div>
                 <Image src={campaignSelected.thumb} alt=""
                        width={1200}
@@ -133,6 +119,7 @@ export default function CampaignPage(){
                 </div>
 
             </div>
+            {/*<h1 className="container desc-campaign">{campaignSelected.campaign_description}</h1>*/}
             {/*<div className="container text-campaign">*/}
             {/*    <h1>{campaignSelected.name}</h1>*/}
             {/*    <p>{campaignSelected.campaign_description}</p>*/}

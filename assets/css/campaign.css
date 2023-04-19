@@ -54,3 +54,14 @@
     top: 20%;
     left: calc(50% - 50px);
 }
+.title-campaign{
+    margin-top: 40px;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.desc-campaign{
+    margin-top: 40px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: gray;
+}
