@@ -50,7 +50,7 @@ export function dataOutputProduct(): Product {
     }
     return data;
 }
-const Product = ({ product }: ProductPageType) => {
+const Product = () => {
     const [products, setProducts] = useState<Product>(dataOutputProduct())
   const [showBlock, setShowBlock] = useState('description');
   const router = useRouter();
@@ -95,7 +95,7 @@ const Product = ({ product }: ProductPageType) => {
               <button type="button" onClick={() => setShowBlock('reviews')} className={`btn btn--rounded ${showBlock === 'reviews' ? 'btn--active' : ''}`}>Bình luận (2)</button>
             </div>
 
-            <Description show={showBlock === 'description'} />
+            <Description show={showBlock === 'description'} product={products}/>
             {/*<Reviews product={product} show={showBlock === 'reviews'} />*/}
           </div>
         </div>

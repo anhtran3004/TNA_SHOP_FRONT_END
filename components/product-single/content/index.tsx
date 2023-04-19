@@ -70,11 +70,13 @@ const Content = (props: ProductContent) => {
       console.log('error')
     }
   }
-
+  useEffect(() =>{
+    fetchDataDiscount().then();
+  }, [])
   useEffect(() =>{
     fetchInventory().then()
     fetchListColor().then();
-    // fetchDataDiscount().then();
+    fetchDataDiscount().then();
   }, [id])
   async function fetchListSize(){
     try {
@@ -138,17 +140,19 @@ const Content = (props: ProductContent) => {
           {/*  style: "currency",*/}
           {/*  currency:"VND"*/}
           {/*})}</h4>*/}
-          {(discount && discount.discount_value !== 0) ? <>
+          {((discount !== null) && discount.discount_value !== 0) ? <>
+
+                  <h4 className={"product__price " + (discount ? 'product__price--discount' : '')}
+                      style={{textDecoration:"line-through", color:"gray", fontSize:"20px", marginRight: "15px"}}>
+                    {props.product.price.toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency:"VND"
+                  })}</h4>
                 <h4>{calculateDiscount().toLocaleString("vi-VN", {
                   style: "currency",
                   currency:"VND"
                 })}</h4>
-            <div>
-                <div className={"product__price " + (discount ? 'product__price--discount' : '')} >{props.product.price.toLocaleString("vi-VN", {
-                  style: "currency",
-                  currency:"VND"
-                })}</div>
-            </div>
+
               </> :
               <>
                 <h4>{props.product.price.toLocaleString("vi-VN", {

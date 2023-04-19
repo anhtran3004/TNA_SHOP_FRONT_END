@@ -1,10 +1,13 @@
+import {Product} from "../../../types";
+
 type ProductDescriptionType = {
   show: boolean;
+  product: Product
 }
 
-const Description = ({ show }: ProductDescriptionType) => {
+const Description = (props: ProductDescriptionType) => {
   const style = {
-    display: show ? 'flex' : 'none',
+    display: props.show ? 'flex' : 'none',
   }
 
   return (
@@ -12,7 +15,7 @@ const Description = ({ show }: ProductDescriptionType) => {
       <div className="product-description-block">
         <i className="icon-cart"></i>
         <h4>Mô tả chi tiết về sản phẩm</h4>
-        <p>Áo phông trắng Summer Vibes thuộc dòng uiKit với hình in đầy màu sắc. <br></br>Được làm bằng bông jersey. Áo phông hoàn toàn phù hợp với quần jean, quần dài hoặc quần short.</p>
+        <p>{props.product.description}</p>
       </div>
       <div className="product-description-block">
         <i className="icon-cart"></i>
