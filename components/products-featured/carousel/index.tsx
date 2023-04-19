@@ -34,6 +34,7 @@ export function dataInputProduct(): InputProduct {
     filter: {
       product_id: [],
       category_id: [],
+      campaign_id: [],
       price: {
         min: 0,
         max: 10000000
@@ -62,7 +63,6 @@ const ProductsCarousel = () => {
             if(res.data[i].hot === 1)
               setProducts((prev) => [...prev,res.data[i]]);
           }
-
         } else {
           console.log('error');
         }
@@ -72,19 +72,17 @@ const ProductsCarousel = () => {
     }
     // console.log("statusUpdate", statusUpdate);
     fetchProductData().then();
-  }), []
-  if (!products) return <div>Loading</div>;
-
+  },[])
   return (
     <div className="products-carousel containers">
       <Swiper 
-      spaceBetween={spaceBetween} 
-      // loop={true}
-      centeredSlides={centeredSlides} 
-      watchOverflow={true} 
+      spaceBetween={spaceBetween}
+      loop={true}
+      centeredSlides={centeredSlides}
+      watchOverflow={true}
       slidesPerView={slidesPerView}
-      // onAutoplayTimeLeft={onAutoplayTimeLeft}
-      className="swiper-wrapper">
+      className="swiper-wrapper"
+      >
         {products.map((item, index) => (
           <SwiperSlide key={index}>
             <ProductItem

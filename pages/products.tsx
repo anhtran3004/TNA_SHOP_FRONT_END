@@ -14,6 +14,7 @@ export function dataInputProducts(){
         filter: {
             product_id: [],
             category_id: [],
+            campaign_id: [],
             price: {
                 min: 0,
                 max: 10000000

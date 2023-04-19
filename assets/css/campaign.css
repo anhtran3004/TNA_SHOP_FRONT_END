@@ -32,3 +32,25 @@
     font-size: 20px;
     padding: 15px;
 }
+/*.swiper-slide-next{*/
+/*    display: none;*/
+/*}*/
+/*.swiper-slide-prev{*/
+/*    display: none;*/
+/*}*/
+.swiper-slide-active{
+    z-index: 10;
+}
+.loading-campaign{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 11;
+}
+.inner-loading-modal{
+    position: absolute;
+    top: 20%;
+    left: calc(50% - 50px);
+}

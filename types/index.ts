@@ -68,6 +68,7 @@ export type InputProduct = {
   filter: {
     product_id: number[],
     category_id: number[],
+    campaign_id: number[],
     price:{
       min: number,
       max: number

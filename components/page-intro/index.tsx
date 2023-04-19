@@ -4,11 +4,14 @@ import {useEffect, useState} from "react";
 import {getListCampaign} from "../../lib/Campaign/API";
 import {Campaign} from "../../types";
 import Link from "next/link";
+import Modal from "../Modal/Modal";
+import Loading from "../Loading/loading";
 
 SwiperCore.use([EffectFade, Navigation]);
 
 const PageIntro = () => {
-  const [campaigns, setCampaigns] = useState<Campaign[]>([])
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [isShowLoading, setIsShowLoading] = useState(true);
   useEffect(() => {
     async function fetchCampaignData() {
       try {
@@ -23,12 +26,28 @@ const PageIntro = () => {
         console.log('error');
       }
     }
+    // setIsShowLoading(true);
+    fetchCampaignData().then(() => {
+      setIsShowLoading(false);
+    });
 
-    fetchCampaignData().then();
   }, [])
-  return (
-    <section className="page-intro">  
+  return <>
+    <section className="page-intro">
+
       <Swiper navigation effect="fade" className="swiper-wrapper">
+        {isShowLoading &&
+            <SwiperSlide>
+              <div className="page-intro__slide" style={{backgroundImage: `url(/)`}}>
+                <div className="container">
+                  <div className="page-intro__slide__content">
+                    <h2></h2>
+                    <a className="btn-shop"><i className="icon-right"></i>Mua ngay</a>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+        }
         {campaigns.map((cam, index) =>(
             <SwiperSlide key={index}>
               <div className="page-intro__slide" style={{ backgroundImage: `url(${cam.thumb})` }}>
@@ -77,8 +96,18 @@ const PageIntro = () => {
           </ul>
         </div>
       </div>
+
+
     </section>
-  )
+    {isShowLoading &&
+        <section className="loading-campaign">
+          <Loading/>
+        </section>
+    }
+
+
+
+  </>
 };
 
 export default PageIntro

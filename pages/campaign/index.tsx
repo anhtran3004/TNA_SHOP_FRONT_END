@@ -9,6 +9,7 @@ import {InputProduct, Product, Campaign} from "../../types";
 import {dataInputProducts} from "../products";
 import {getListCampaign} from "../../lib/Campaign/API";
 import Link from "next/link";
+import {useRouter} from "next/router";
 export function GetDefaultCampaign() {
     const data = {
         id: 0,
@@ -22,12 +23,40 @@ export function GetDefaultCampaign() {
     }
     return data
 }
+
 export default function CampaignPage(){
+    function dataInputProducts(campaignId: number): InputProduct {
+        const data = {
+            filter: {
+                product_id: [],
+                category_id: [],
+                campaign_id: [campaignId],
+                price: {
+                    min: 0,
+                    max: 10000000
+                }
+            },
+            sort: {
+                field: "priority",
+                order: "DESC"
+            },
+            pagination: {
+                page: 0,
+                perPage: 1000
+            }
+        }
+        return data;
+    }
     const [products, setProducts] = useState<Product[]>([])
-    const [filterProduct, setFilterProduct] = useState<InputProduct>(dataInputProducts());
     const [isOpenAlert, setIsOPenAlert] = useState(false);
     const [textErrorAPI, setTextErrorAPI] = useState("");
-    const [campaignSelected, setCampaignSelected] = useState<Campaign>(GetDefaultCampaign())
+    const [campaignSelected, setCampaignSelected] = useState<Campaign>(GetDefaultCampaign());
+    const [campaignId, setCampaignId] = useState(0);
+    const [filterProduct, setFilterProduct] = useState<InputProduct>(dataInputProducts(campaignId));
+
+    const router = useRouter();
+    const sku = router.query.sku;
+
     useEffect(() =>{
         async function fetchCampaignData() {
             try {
@@ -35,7 +64,10 @@ export default function CampaignPage(){
                 const status = res.code;
                 if (status === 200) {
                     for(let i = 0; i < res.data.length; i++){
-                        setCampaignSelected(res.data[i]);
+                        if(res.data[i].sku === sku){
+                            setCampaignSelected(res.data[i]);
+                            setCampaignId(res.data[i].id)
+                        }
                     }
                 } else {
                     console.log('error');
@@ -47,6 +79,10 @@ export default function CampaignPage(){
 
         fetchCampaignData().then();
     }, [])
+    useEffect(() =>{
+        console.log(campaignId);
+        setFilterProduct(dataInputProducts(campaignId))
+    }, [campaignId])
     useEffect(() =>{
         async function fetchProductData() {
             try {
