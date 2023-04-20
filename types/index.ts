@@ -125,3 +125,7 @@ export type Campaign = {
   status: number,
   campaign_description: string
 }
+export  type InputLogin = {
+  username: string,
+  password : string
+}

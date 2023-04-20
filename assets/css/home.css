@@ -1,3 +1,45 @@
 .containers{
     overflow: hidden;
 }
+.error-modal{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 13;
+
+    /*height: 100%;*/
+}
+.inner-success {
+    /*position: absolute;*/
+    /*top: 20%;*/
+    /*left: calc(50% - 50px);*/
+    width: 300px;
+    margin: auto;
+    margin-top: 100px;
+
+    animation-name: slide-down;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    display: flex;
+}
+.inner-success > p{
+    color: black;
+    margin-left: 15px;
+    margin-bottom: 0;
+    padding-top: 3px;
+}
+.inner-success > img{
+    margin-right: 30px;
+}
+
+@keyframes slide-down {
+    from {
+        margin-top: 100px;
+    }
+    to {
+        margin-top: 130px;
+    }
+}
