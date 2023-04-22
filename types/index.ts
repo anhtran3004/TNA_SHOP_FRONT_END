@@ -129,3 +129,11 @@ export  type InputLogin = {
   username: string,
   password : string
 }
+export type User = {
+  id: number,
+  username: string,
+  email: string,
+  name: string,
+  phone: string,
+  birth_date: string
+}

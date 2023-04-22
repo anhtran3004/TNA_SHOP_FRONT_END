@@ -7,18 +7,50 @@ import Address from "../components/Account/Adress";
 import Like from "../components/Account/Like";
 import Accounts from "../components/Account/Accounts";
 import {useRouter} from "next/router";
+import {getUsers} from "../lib/User/API";
+import {User} from "../types";
+export function dataUserDefault() : User{
+    const data = {
+        id: 0,
+        username: '',
+        email: '',
+        name: '',
+        phone: '',
+        birth_date: ''
+    }
+    return data;
+}
 export default function Account(){
     const [showMenu, setShowMenu] = useState('1');
     const [username, setUsername] = useState('');
+    const [userId, setUserId] = useState(0);
     const router = useRouter();
+    const [user, setUser] = useState<User>(dataUserDefault())
     useEffect(() => {
         if(localStorage.getItem('dataDecoded') !== undefined){
             const data = JSON.parse(localStorage.getItem('dataDecoded') + "");
-            if(data !== null)
-            setUsername(data.user);
+            if(data !== null){
+                setUsername(data.user);
+                setUserId(data.id);
+                fetchUserData(data.id).then();
+            }
         }
 
     }, [])
+    async function fetchUserData(id: number){
+        try{
+            const res = await getUsers(id);
+            if(res.code === 200){
+                setUser(res.data);
+            }
+        }catch (e){
+            console.log('error');
+        }
+
+    }
+    useEffect(() =>{
+        console.log("username",user.name);
+    }, [user])
     function logout(){
         localStorage.removeItem('accessToken');
         localStorage.removeItem('dataCoded');
@@ -63,7 +95,7 @@ export default function Account(){
                         <Like />
                     ) : null}
                     {showMenu == '6' ? (
-                        <Accounts />
+                        <Accounts user={user}/>
                     ) : null}
                 </div>
             </div>
