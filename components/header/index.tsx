@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { RootState } from 'store';
 import Image from "next/image";
+import {getAccessToken, verifyToken} from "../../lib/passport";
+const  jwt = require('jsonwebtoken');
 
 type HeaderType = {
   isErrorPage?: Boolean;
@@ -21,6 +23,32 @@ const Header = ({ isErrorPage }: HeaderType) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const navRef = useRef(null);
   const searchRef = useRef(null);
+  const [user, setUser] = useState('');
+  // const accessTokens = localStorage.getItem('accessToken');
+  useEffect(() =>{
+    if(localStorage.getItem('accessToken') !== undefined){
+      // setUser(localStorage.getItem('accessToken') +"");
+      const token = localStorage.getItem('accessToken');
+        console.log("token", token);
+        const data = verifyToken(token+"");
+        setUser(data.user);
+        localStorage.setItem("dataDecoded", JSON.stringify(data));
+        console.log(data.user);
+      if (data && data.exp < Date.now() / 1000) {
+        // Access token is still valid
+        getAccessToken().then();
+      }
+
+    }
+    // if(localStorage.getItem('accessToken') !== undefined){
+    //   const token = localStorage.getItem('accessToken');
+    //   console.log("token", token);
+    //   const data = verifyToken(token+"");
+    //   console.log(data);
+    //   // setUser(data.user);
+    // }
+
+  },[])
 
   const headerClass = () => {
     if(window.pageYOffset === 0) {
@@ -93,9 +121,18 @@ const Header = ({ isErrorPage }: HeaderType) => {
               }
             </button>
           </Link>
-          <Link href="/login">
-            <button className="site-header__btn-avatar"><i className="icon-avatar"></i></button>
-          </Link>
+          {(user === '') ?
+              <Link href="/login">
+                <button className="site-header__btn-avatar"><i className="icon-avatar"></i></button>
+              </Link>
+              :
+              <Link href="/account">
+                <button className="site-header__btn-avatar"><i className="icon-avatar"></i></button>
+              </Link>
+          }
+          {/*<Link href="/login">*/}
+          {/*  <button className="site-header__btn-avatar"><i className="icon-avatar"></i></button>*/}
+          {/*</Link>*/}
           <button 
             onClick={() => setMenuOpen(true)} 
             className="site-header__btn-menu">

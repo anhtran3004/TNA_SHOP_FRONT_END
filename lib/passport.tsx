@@ -1,21 +1,27 @@
-// @ts-ignore
-import {jwt} from "jsonwebtoken"
+
+const  jwt = require('jsonwebtoken');
+// import jwt from 'jsonwebtoken'
 import {RefreshToken} from "./Auth/API";
 
 const refreshToken = process.env.NEXT_PUBLIC_REFRESH_TOKEN_SECRET;
+const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET;
 
-const verifyToken = (token: string) => {
+export const verifyToken = (token: string) => {
+    console.log(accessToken)
     try {
-        const decoded = jwt.verify(token, 'your-secret-key');
+
+        const decoded = jwt.verify(token, accessToken);
+        console.log("decoded", decoded);
         return decoded;
-    } catch (err) {
-        return null;
+    }catch (e) {
+        console.log('error verify token');
+        // getAccessToken().then();
     }
+
 };
 
-const getAccessToken = async () => {
-    // @ts-ignore
-    const decoded = verifyToken(localStorage.getItem('accessToken'));
+export const getAccessToken = async () => {
+    const decoded = verifyToken(localStorage.getItem('accessToken') +"");
     if (decoded && decoded.exp > Date.now() / 1000) {
         // Access token is still valid
         return decoded;

@@ -22,7 +22,7 @@ export async function RefreshToken(refreshToken: string){
     const urls = process.env.NEXT_PUBLIC_BASE_URL;
     const body = {refreshToken: refreshToken}
     try{
-        const url_refreshToken = urls + "/api/v1/user/login";
+        const url_refreshToken = urls + "/api/v1/user/refreshToken";
         const fetchData = {
             method: 'POST',
             headers:{

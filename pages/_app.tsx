@@ -4,6 +4,7 @@ import {wrapper} from '../store';
 import '../assets/css/home.css'
 import '../assets/css/products.css'
 import '../assets/css/campaign.css'
+import '../assets/css/account.css'
 // types
 import type { AppProps } from 'next/app';
 
