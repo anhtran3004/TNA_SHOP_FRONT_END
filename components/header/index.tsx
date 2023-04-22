@@ -27,26 +27,18 @@ const Header = ({ isErrorPage }: HeaderType) => {
   // const accessTokens = localStorage.getItem('accessToken');
   useEffect(() =>{
     if(localStorage.getItem('accessToken') !== undefined){
+      // const data = getAccessToken().then();
       // setUser(localStorage.getItem('accessToken') +"");
       const token = localStorage.getItem('accessToken');
         console.log("token", token);
         const data = verifyToken(token+"");
+        if(data !== undefined)
         setUser(data.user);
         localStorage.setItem("dataDecoded", JSON.stringify(data));
-        console.log(data.user);
-      if (data && data.exp < Date.now() / 1000) {
-        // Access token is still valid
-        getAccessToken().then();
-      }
+        // console.log(data.user);
 
     }
-    // if(localStorage.getItem('accessToken') !== undefined){
-    //   const token = localStorage.getItem('accessToken');
-    //   console.log("token", token);
-    //   const data = verifyToken(token+"");
-    //   console.log(data);
-    //   // setUser(data.user);
-    // }
+
 
   },[])
 

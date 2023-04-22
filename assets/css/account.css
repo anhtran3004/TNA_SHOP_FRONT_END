@@ -20,12 +20,15 @@
     padding-left: 15px;
 
 }
-.left_account h1{
+.left_account > h1{
     margin: 40px 0;
 }
 .box_menu{
     border: solid 1px rgb(226, 220, 220);
     width: 350px;
+}
+.box_menu > h2{
+    margin: 20px 0;
 }
 
 .content_account{
