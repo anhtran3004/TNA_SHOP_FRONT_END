@@ -135,6 +135,7 @@ export type User = {
   email: string,
   name: string,
   phone: string,
+  address: string
   birth_date: string
 }
 export type InputUser = {
@@ -145,5 +146,27 @@ export type InputUser = {
     address: string,
     birth_date: string,
     role: string
+  }
+}
+export type InputOrder = {
+  order_input: {
+    name: string,
+    email: string,
+    address: string,
+    phone: string,
+    ship_name: string,
+    method_delivery: string,
+    user_id: number,
+    shipping_fee: number
+  }
+}
+export type InputOrderProduct = {
+  order_input: {
+    order_id: number,
+    product_id: number,
+    price: number,
+    quantity: number,
+    color: string,
+    size: string
   }
 }

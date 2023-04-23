@@ -18,6 +18,7 @@ export function dataUserDefault() : User{
         email: '',
         name: '',
         phone: '',
+        address: '',
         birth_date: ''
     }
     return data;

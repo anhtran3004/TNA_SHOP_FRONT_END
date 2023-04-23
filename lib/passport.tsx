@@ -7,11 +7,9 @@ const refreshToken = process.env.NEXT_PUBLIC_REFRESH_TOKEN_SECRET;
 const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET;
 
 export const verifyToken = (token: string) => {
-    console.log(accessToken)
     try {
 
         const decoded = jwt.verify(token, accessToken);
-        console.log("decoded", decoded);
         return decoded;
     }catch (e) {
         console.log('error verify token');

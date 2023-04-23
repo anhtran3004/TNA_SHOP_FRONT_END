@@ -82,8 +82,7 @@ const ShoppingCart = () => {
         </div>
         <div className="cart-actions">
           <a href="/products" className="cart__btn-back"><i className="icon-left"></i> Tiếp tục mua sắm</a>
-          <input type="text" placeholder="Mã giảm giá..." className="cart__promo-code" />
-
+          {/*<input type="text" placeholder="Mã giảm giá..." className="cart__promo-code" />*/}
           <div className="cart-actions__items-wrapper">
             <p className="cart-actions__total">Tổng tiền<strong>{priceTotal().toLocaleString("vi-VN", {
               style: "currency",
