@@ -9,6 +9,8 @@ import Accounts from "../components/Account/Accounts";
 import {useRouter} from "next/router";
 import {getUsers} from "../lib/User/API";
 import {User} from "../types";
+import Success from "../components/Alert/Success";
+import Errors from "../components/Alert/Errors";
 export function dataUserDefault() : User{
     const data = {
         id: 0,
@@ -20,12 +22,17 @@ export function dataUserDefault() : User{
     }
     return data;
 }
+export function randomNumberInRange(min: number, max: number) {
+    // 👇️ get number between min (inclusive) and max (inclusive)
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 export default function Account(){
     const [showMenu, setShowMenu] = useState('1');
     const [username, setUsername] = useState('');
     const [userId, setUserId] = useState(0);
     const router = useRouter();
-    const [user, setUser] = useState<User>(dataUserDefault())
+    const [user, setUser] = useState<User>(dataUserDefault());
+    const [statusUpdateAccount, setStatusUpdateAccount] = useState(-1)
     useEffect(() => {
         if(localStorage.getItem('dataDecoded') !== undefined){
             const data = JSON.parse(localStorage.getItem('dataDecoded') + "");
@@ -36,7 +43,7 @@ export default function Account(){
             }
         }
 
-    }, [])
+    }, [statusUpdateAccount])
     async function fetchUserData(id: number){
         try{
             const res = await getUsers(id);
@@ -64,13 +71,13 @@ export default function Account(){
                     <div className='box_menu'>
                         <h2>{username}</h2>
                         <ul className='option_account'>
-                            <li onClick={() =>{setShowMenu('1')}} className={showMenu=='1' ? "bor" : ""}><i className='bx bx-package'></i>Đơn hàng của tôi</li>
+                            <li onClick={() =>{setShowMenu('1')}} className={showMenu=='1' ? "bor" : ""}><i className="fa-solid fa-cart-shopping"></i>Đơn hàng của tôi</li>
                             <li onClick={() =>{setShowMenu('2')}} className={showMenu=='2' ? "bor" : ""}><i className="fa-light fa-percent"></i>Khuyến mại</li>
-                            <li onClick={() =>{setShowMenu('3')}} className={showMenu=='3' ? "bor" : ""}><i className='bx bx-palette'></i>C-points</li>
-                            <li onClick={() =>{setShowMenu('4')}} className={showMenu=='4' ? "bor" : ""}><i className='bx bxs-location-plus' ></i>Sổ địa chỉ</li>
-                            <li onClick={() =>{setShowMenu('5')}} className={showMenu=='5' ? "bor" : ""}><i className='bx bx-heart' ></i>Yêu thích</li>
-                            <li onClick={() =>{setShowMenu('6')}} className={showMenu=='6' ? "bor" : ""}><i className='bx bxs-user-circle' ></i>Tài khoản</li>
-                            <li  onClick={logout}><i className='bx bx-log-out'></i>Đăng xuất</li>
+                            {/*<li onClick={() =>{setShowMenu('3')}} className={showMenu=='3' ? "bor" : ""}><i className="fa-regular fa-hundred-points"></i>C-points</li>*/}
+                            <li onClick={() =>{setShowMenu('4')}} className={showMenu=='4' ? "bor" : ""}><i className="fa-sharp fa-solid fa-location-crosshairs"></i>Sổ địa chỉ</li>
+                            <li onClick={() =>{setShowMenu('5')}} className={showMenu=='5' ? "bor" : ""}><i className="fa-solid fa-heart"></i>Yêu thích</li>
+                            <li onClick={() =>{setShowMenu('6')}} className={showMenu=='6' ? "bor" : ""}><i className="fa-solid fa-user"></i>Tài khoản</li>
+                            <li  onClick={logout}><i className="fa-solid fa-right-from-bracket"></i>Đăng xuất</li>
                         </ul>
                         <div className='lh'>
                             <h5 style={{fontWeight:"700"}}>Bạn cần hỗ trợ?</h5>
@@ -95,10 +102,11 @@ export default function Account(){
                         <Like />
                     ) : null}
                     {showMenu == '6' ? (
-                        <Accounts user={user}/>
+                        <Accounts user={user} setStatusUpdateAccount={setStatusUpdateAccount}/>
                     ) : null}
                 </div>
             </div>
         </Layout>
+
     </>
 }
