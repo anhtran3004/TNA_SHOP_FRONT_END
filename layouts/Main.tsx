@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Header from 'components/header';
 import { useRouter } from 'next/router';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 type LayoutType = {
   title?: string;

@@ -2,10 +2,18 @@ import { useSelector } from 'react-redux';
 import CheckoutStatus from '../../components/checkout-status';
 import Item from './item';
 import { RootState } from 'store';
+import Modal from "../Modal/Modal";
+import {useEffect, useState} from "react";
+import QuestionAlerts from "../Alert/QuestionAlerts";
+import {useRouter} from "next/router";
+import {verifyToken} from "../../lib/passport";
 
 const ShoppingCart = () => {
+  const router = useRouter();
   const { cartItems } = useSelector((state: RootState)  => state.cart);
-
+  const [isOpenDeleteProductAlert, setIsOpenDeleteProductAlert] = useState(false);
+  const textError = "Hãy đăng nhập để tiến hành thanh toán?";
+  const [user, setUser] = useState('');
   const priceTotal = () => {
     let totalPrice = 0;
     if(cartItems.length > 0) {
@@ -14,8 +22,24 @@ const ShoppingCart = () => {
 
     return totalPrice;
   }
+  function nextLogin() {
+    router.push('/login').then();
+  }
+  useEffect(() =>{
+    if(localStorage.getItem('accessToken') !== undefined){
+      // const data = getAccessToken().then();
+      // setUser(localStorage.getItem('accessToken') +"");
+      const token = localStorage.getItem('accessToken');
+      console.log("token", token);
+      const data = verifyToken(token+"");
+      if(data !== undefined)
+        setUser(data.user);
+      localStorage.setItem("dataDecoded", JSON.stringify(data));
+      // console.log(data.user);
+    }
+  },[])
 
-  return (
+  return <>
     <section className="cart">
       <div className="container">
         <div className="cart__intro">
@@ -29,7 +53,7 @@ const ShoppingCart = () => {
               <tbody>
                 <tr>
                   <th style={{textAlign: 'left'}}>Sản phẩm</th>
-                  <th>màu sắc</th>
+                  <th>Màu sắc</th>
                   <th>Kích cỡ</th>
                   <th>Số lượng</th>
                   <th>Đơn giá</th>
@@ -61,13 +85,26 @@ const ShoppingCart = () => {
           <input type="text" placeholder="Mã giảm giá..." className="cart__promo-code" />
 
           <div className="cart-actions__items-wrapper">
-            <p className="cart-actions__total">Tổng tiền<strong>${priceTotal().toFixed(2)}</strong></p>
-            <a href="/cart/checkout" className="btn btn--rounded btn--yellow">Thanh toán</a>
+            <p className="cart-actions__total">Tổng tiền<strong>{priceTotal().toLocaleString("vi-VN", {
+              style: "currency",
+              currency:"VND"
+            })}</strong></p>
+            {(user === '') ?
+                <a onClick={() =>setIsOpenDeleteProductAlert(true)} className="btn btn--rounded btn--yellow">Thanh toán</a>
+                :
+                <a href="/cart/checkout" className="btn btn--rounded btn--yellow">Thanh toán</a>
+            }
           </div>
         </div>
       </div>
     </section>
-  )
+  {isOpenDeleteProductAlert && (
+      <Modal>
+        <QuestionAlerts textError={textError} setIsOpenQuestionAlert={setIsOpenDeleteProductAlert}
+                       setOkListener={nextLogin}/>
+      </Modal>
+  )}
+  </>
 };
 
   

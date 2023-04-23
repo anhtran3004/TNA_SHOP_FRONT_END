@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 import CheckoutStatus from '../../components/checkout-status';
 import CheckoutItems from '../../components/checkout/items';
 import { RootState } from 'store';
+import {useState} from "react";
 
 const CheckoutPage = () => {
-
+  const [delivery, setDelivery] = useState(0);
   const priceTotal = useSelector((state: RootState) => {
     const cartItems = state.cart.cartItems;
     let totalPrice = 0;
@@ -27,10 +28,10 @@ const CheckoutPage = () => {
 
           <div className="checkout-content">
             <div className="checkout__col-6">
-              <div className="checkout__btns">
-                <button className="btn btn--rounded btn--yellow">Đăng nhập</button>
-                <button className="btn btn--rounded btn--border">Đăng ký</button>
-              </div>
+              {/*<div className="checkout__btns">*/}
+              {/*  <button className="btn btn--rounded btn--yellow">Đăng nhập</button>*/}
+              {/*  <button className="btn btn--rounded btn--border">Đăng ký</button>*/}
+              {/*</div>*/}
 
               <div className="block">
                 <h3 className="block__title">Thông tin giao hàng</h3>
@@ -89,23 +90,26 @@ const CheckoutPage = () => {
               <div className="block">
                 <h3 className="block__title">Phương thức thanh toán</h3>
                 <ul className="round-options round-options--three">
+                  {/*<li className="round-item">*/}
+                  {/*  <img src="/images/logos/paypal.png" alt="Paypal" />*/}
+                  {/*</li>*/}
+                  {/*<li className="round-item">*/}
+                  {/*  <img src="/images/logos/visa.png" alt="Paypal" />*/}
+                  {/*</li>*/}
+                  {/*<li className="round-item">*/}
+                  {/*  <img src="/images/logos/mastercard.png" alt="Paypal" />*/}
+                  {/*</li>*/}
+                  {/*<li className="round-item">*/}
+                  {/*  <img src="/images/logos/maestro.png" alt="Paypal" />*/}
+                  {/*</li>*/}
+                  {/*<li className="round-item">*/}
+                  {/*  <img src="/images/logos/discover.png" alt="Paypal" />*/}
+                  {/*</li>*/}
+                  {/*<li className="round-item">*/}
+                  {/*  <img src="/images/logos/ideal-logo.svg" alt="Paypal" />*/}
+                  {/*</li>*/}
                   <li className="round-item">
-                    <img src="/images/logos/paypal.png" alt="Paypal" />
-                  </li>
-                  <li className="round-item">
-                    <img src="/images/logos/visa.png" alt="Paypal" />
-                  </li>
-                  <li className="round-item">
-                    <img src="/images/logos/mastercard.png" alt="Paypal" />
-                  </li>
-                  <li className="round-item">
-                    <img src="/images/logos/maestro.png" alt="Paypal" />
-                  </li>
-                  <li className="round-item">
-                    <img src="/images/logos/discover.png" alt="Paypal" />
-                  </li>
-                  <li className="round-item">
-                    <img src="/images/logos/ideal-logo.svg" alt="Paypal" />
+                    <img src="/images/logos/checkout.jpg" alt="Paypal" />
                   </li>
                 </ul>
               </div>
@@ -113,21 +117,29 @@ const CheckoutPage = () => {
               <div className="block">
                 <h3 className="block__title">Hình thức vận chuyển</h3>
                 <ul className="round-options round-options--two">
-                  <li className="round-item round-item--bg">
-                    <img src="/images/logos/inpost.svg" alt="Paypal" />
-                    <p>$20.00</p>
+                  {/*<li className="round-item round-item--bg">*/}
+                  {/*  <img src="/images/logos/inpost.svg" alt="Paypal" />*/}
+                  {/*  <p>$20.00</p>*/}
+                  {/*</li>*/}
+                  {/*<li className="round-item round-item--bg">*/}
+                  {/*  <img src="/images/logos/dpd.svg" alt="Paypal" />*/}
+                  {/*  <p>$12.00</p>*/}
+                  {/*</li>*/}
+                  {/*<li className="round-item round-item--bg">*/}
+                  {/*  <img src="/images/logos/dhl.svg" alt="Paypal" />*/}
+                  {/*  <p>$15.00</p>*/}
+                  {/*</li>*/}
+                  {/*<li className="round-item round-item--bg">*/}
+                  {/*  <img src="/images/logos/maestro.png" alt="Paypal" />*/}
+                  {/*  <p>$10.00</p>*/}
+                  {/*</li>*/}
+                  <li className={(delivery === 0) ? "delivery-selected round-item round-item--bg" : "round-item round-item--bg"} onClick={() => setDelivery(0)}>
+                    <img src="/images/logos/viettel_post.png" alt="Paypal" />
+                    {/*<p>$15.00</p>*/}
                   </li>
-                  <li className="round-item round-item--bg">
-                    <img src="/images/logos/dpd.svg" alt="Paypal" />
-                    <p>$12.00</p>
-                  </li>
-                  <li className="round-item round-item--bg">
-                    <img src="/images/logos/dhl.svg" alt="Paypal" />
-                    <p>$15.00</p>
-                  </li>
-                  <li className="round-item round-item--bg">
-                    <img src="/images/logos/maestro.png" alt="Paypal" />
-                    <p>$10.00</p>
+                  <li className={(delivery === 1) ? "delivery-selected round-item round-item--bg" : "round-item round-item--bg"} onClick={() => setDelivery(1)}>
+                    <img src="/images/logos/ninja-van.webp" alt="Paypal" />
+                    {/*<p>$10.00</p>*/}
                   </li>
                 </ul>
               </div>
@@ -140,7 +152,10 @@ const CheckoutPage = () => {
                 
                 <div className="checkout-total">
                   <p>Tổng thanh toán</p>
-                  <h3>${priceTotal}</h3>
+                  <h3>{priceTotal.toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency:"VND"
+                  })}</h3>
                 </div>
               </div>
             </div>

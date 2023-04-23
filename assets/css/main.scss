@@ -1663,7 +1663,7 @@ h1,h2,h3,h4,h5 {
 
 .product-single-page {
   .section {
-    margin-bottom: 90;
+    margin-bottom: 90px;
   }
 }
 
@@ -2357,9 +2357,10 @@ h1,h2,h3,h4,h5 {
       margin-right: 48px;
     }
     img {
-      width: 100%;
+      //width: 100%;
+      width: 70px;
       height: 100%;
-      object-fit: cover;
+      //object-fit: cover;
       border-radius: 100%;
       object-position: top center;
     }

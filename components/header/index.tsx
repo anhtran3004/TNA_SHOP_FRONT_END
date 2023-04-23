@@ -36,10 +36,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
         setUser(data.user);
         localStorage.setItem("dataDecoded", JSON.stringify(data));
         // console.log(data.user);
-
     }
-
-
   },[])
 
   const headerClass = () => {

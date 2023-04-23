@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { removeProduct, setCount } from 'store/reducers/cart';
 import { ProductStoreType } from 'types';
+import Image from "next/image";
 
 const ShoppingCart = ({ thumb, name, id, color, size, count, price }: ProductStoreType) => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const ShoppingCart = ({ thumb, name, id, color, size, count, price }: ProductSto
       <td>
         <div className="cart-product">
           <div className="cart-product__img">
-            <img src={thumb} alt="" />
+            <img src={thumb} alt=""/>
           </div>
 
           <div className="cart-product__content">
@@ -67,7 +68,10 @@ const ShoppingCart = ({ thumb, name, id, color, size, count, price }: ProductSto
           </button>
         </div>
       </td>
-      <td>${price}</td>
+      <td>{price.toLocaleString("vi-VN", {
+          style: "currency",
+          currency:"VND"
+      })}</td>
       <td className="cart-item-cancel"><i className="icon-cancel" onClick={() => removeFromCart()}></i></td>
     </tr>
   )
