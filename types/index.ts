@@ -157,8 +157,22 @@ export type InputOrder = {
     ship_name: string,
     method_delivery: string,
     user_id: number,
-    shipping_fee: number
+    shipping_fee: number,
+    total_price: number
   }
+}
+export type Order = {
+    id: number,
+    name: string,
+    email: string,
+    address: string,
+    phone: string,
+    ship_name: string,
+    method_delivery: string,
+    user_id: number,
+    shipping_fee: number,
+    status: number,
+    total_price: number
 }
 export type InputOrderProduct = {
   order_input: {

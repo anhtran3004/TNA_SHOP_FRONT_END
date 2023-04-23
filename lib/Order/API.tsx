@@ -33,3 +33,20 @@ export async function insertOrderProduct(input: InputOrderProduct){
         throw e
     }
 }
+export async function getOrder(status: number){
+    try{
+        const body = {status: status}
+        const url_getOrder = GetARBaseUrl() + "/api/v1/order/";
+        const fetchData = {
+            method: 'POST',
+            headers:{
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }
+        const response = await fetch(url_getOrder, fetchData);
+        return await response.json();
+    }catch (e){
+        throw e
+    }
+}

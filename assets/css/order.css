@@ -38,3 +38,11 @@
 .table_order{
     color: black;
 }
+.btn-view-detail{
+    width: 90px;
+    height: 30px;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 16px;
+}

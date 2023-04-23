@@ -107,7 +107,8 @@ const CheckoutPage = ({thumb, name, id, color, size, count, price}: ProductStore
         ship_name: shipName,
         method_delivery: 'payment on delivery',
         user_id: valueUserId,
-        shipping_fee: 20000
+        shipping_fee: 20000,
+        total_price: priceTotal
       }
     }
     return data;
