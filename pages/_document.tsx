@@ -28,6 +28,7 @@ export default class CustomDocument extends Document<DocumentProps> {
           {/*gg fonts*/}
               <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap"
                     rel="stylesheet"/>
+            <script src="https://kit.fontawesome.com/e20sdfsd9.js" crossOrigin="anonymous"/>
           {/* We only want to add the scripts if in production */}
           {isProduction && (
             <Fragment>
