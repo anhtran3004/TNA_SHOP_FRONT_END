@@ -1,26 +1,26 @@
-import { useDispatch } from 'react-redux';
-import { removeProduct, setCount } from 'store/reducers/cart';
+import {useDispatch} from 'react-redux';
+import {removeProduct, setCount} from 'store/reducers/cart';
 import {InputInventory, ProductStoreType} from 'types';
-import Image from "next/image";
 import {useEffect, useState} from "react";
 import {getQuantityOfInventory} from "../../../lib/Inventory/API";
 
-const ShoppingCart = ({ thumb, name, id, color, size, count, price }: ProductStoreType) => {
-  const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(0);
+const ShoppingCart = ({thumb, name, id, color, size, count, price, originalPrice}: ProductStoreType) => {
+    const dispatch = useDispatch();
+    const [quantity, setQuantity] = useState(0);
     const [isShowErrorQuantity, setIsShowErrorQuantity] = useState(false);
 
-  const removeFromCart = () => {
-    dispatch(removeProduct(
-      { 
-        thumb, 
-        name, 
-        id, 
-        color, 
-        size, 
-        count, 
-        price
-      }
+    const removeFromCart = () => {
+        dispatch(removeProduct(
+            {
+                thumb,
+                name,
+                id,
+                color,
+                size,
+                count,
+                price,
+                originalPrice,
+            }
     ))
   }
 
@@ -37,7 +37,8 @@ const ShoppingCart = ({ thumb, name, id, color, size, count, price }: ProductSto
         color, 
         size, 
         count, 
-        price
+        price,
+          originalPrice
       },
       count,
     }
@@ -110,7 +111,16 @@ const ShoppingCart = ({ thumb, name, id, color, size, count, price }: ProductSto
       <td>{price.toLocaleString("vi-VN", {
           style: "currency",
           currency:"VND"
-      })}</td>
+      })}
+          {/*{(price !== originalPrice) &&*/}
+          {/*    <div className="product__price--discount">*/}
+          {/*        {originalPrice.toLocaleString("vi-VN", {*/}
+          {/*        style: "currency",*/}
+          {/*        currency:"VND"*/}
+          {/*    })}*/}
+          {/*    </div>*/}
+          {/*}*/}
+      </td>
       <td className="cart-item-cancel"><i className="icon-cancel" onClick={() => removeFromCart()}></i></td>
     </tr>
   )

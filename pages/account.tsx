@@ -61,7 +61,7 @@ export default function Account(){
     }, [user])
     function logout(){
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('dataCoded');
+        localStorage.removeItem('dataDecoded');
         router.push('/').then();
     }
     return<>
@@ -81,7 +81,7 @@ export default function Account(){
                             <li  onClick={logout}><i className="fa-solid fa-right-from-bracket"></i>Đăng xuất</li>
                         </ul>
                         <div className='lh'>
-                            <h5 style={{fontWeight:"700"}}>Bạn cần hỗ trợ?</h5>
+                            <h5 style={{fontWeight:"700",marginTop: "15px"}}>Bạn cần hỗ trợ?</h5>
                             <p>Vui lòng gọi <span style={{color:"#31cbcb"}}>1800 1198</span>(miễn phí cước gọi)</p>
                         </div>
                     </div>

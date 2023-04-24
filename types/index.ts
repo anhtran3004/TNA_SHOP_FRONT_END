@@ -46,6 +46,7 @@ export type ProductStoreType = {
     name: string;
     thumb: string;
     price: number;
+    originalPrice:number;
     count: number;
     color: string;
     size: string;

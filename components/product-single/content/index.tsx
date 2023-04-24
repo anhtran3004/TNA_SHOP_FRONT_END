@@ -103,6 +103,14 @@ const Content = (props: ProductContent) => {
             setIsShowErrorSize(false);
         }
     }, [itemSize])
+    //get favorite cart
+    async function getFavoriteProduct(){
+        try{
+            // const res = await
+        }catch (e) {
+            console.log('error get favorite product')
+        }
+    }
     useEffect(() => {
         fetchDataDiscount().then();
 
@@ -149,7 +157,8 @@ const Content = (props: ProductContent) => {
             name: props.product.name,
             // thumb: props.product.thumb ? product.images[0] : '',
             thumb: props.product.thumb,
-            price: props.product.price,
+            price: calculateDiscount(),
+            originalPrice: props.product.price,
             count: count,
             color: color,
             size: itemSize
@@ -189,6 +198,7 @@ const Content = (props: ProductContent) => {
             setIsShowErrorQuantity(false);
         }
     }, [quantity, count])
+
     return (
         <section className="product-content">
             <div className="product-content__intro">
@@ -233,7 +243,6 @@ const Content = (props: ProductContent) => {
                         </>}
                 </div>
             </div>
-
             <div className="product-content__filters">
                 <div className="product-filter-item">
                     <h5>Color:</h5>
@@ -249,8 +258,6 @@ const Content = (props: ProductContent) => {
                                 setColorSelected={setColorSelected}
                             />
                         ))}
-
-
                     </div>
                     {isShowErrorColor && <div style={{color: "red"}}>Bạn chưa chọn màu!</div>}
                 </div>
@@ -280,9 +287,7 @@ const Content = (props: ProductContent) => {
                             <button type="button" onClick={() => {(count >= quantity) ? handleMissingQuantity() : setCount(count + 1)}} className="quantity-button__btn">
                                 +
                             </button>
-
                         </div>
-
                         <button type="submit" onClick={() => addToCart()} className="btn btn--rounded btn--yellow">Add
                             to cart
                         </button>

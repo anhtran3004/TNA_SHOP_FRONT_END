@@ -13,7 +13,7 @@ import Errors from "../../components/Alert/Errors";
 import {removeProduct} from "../../store/reducers/cart";
 import {useRouter} from "next/router";
 
-const CheckoutPage = ({thumb, name, id, color, size, count, price}: ProductStoreType) => {
+const CheckoutPage = ({thumb, name, id, color, size, count, price, originalPrice}: ProductStoreType) => {
   const [delivery, setDelivery] = useState(0);
   const [shipName, setShipName] = useState('Viettel Post')
   const [user, setUser] = useState<User>(dataUserDefault());
@@ -41,7 +41,8 @@ const CheckoutPage = ({thumb, name, id, color, size, count, price}: ProductStore
             color,
             size,
             count,
-            price
+            price,
+            originalPrice
           }
       ))
     }

@@ -69,6 +69,7 @@ const ShoppingCart = () => {
                     name={item.name}
                     color={item.color}
                     price={item.price}
+                    originalPrice={item.originalPrice}
                     size={item.size}
                     count={item.count}
                   />
