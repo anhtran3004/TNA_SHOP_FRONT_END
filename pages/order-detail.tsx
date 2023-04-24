@@ -22,9 +22,6 @@ export default function OrderProducts(){
         fetchOrderProduct().then();
 
     }, [])
-    async function fetchProduct(){
-
-    }
     return<>
         <Layout>
             <h1 className="container" style={{padding: "20px 0", fontSize: "20px"}}>Chi tiết đơn hàng</h1>

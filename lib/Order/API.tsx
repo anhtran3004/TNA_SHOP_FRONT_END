@@ -33,10 +33,10 @@ export async function insertOrderProduct(input: InputOrderProduct){
         throw e
     }
 }
-export async function getOrder(status: number){
+export async function getOrder(status: number, userId: number){
     try{
         const body = {status: status}
-        const url_getOrder = GetARBaseUrl() + "/api/v1/order/";
+        const url_getOrder = GetARBaseUrl() + "/api/v1/order/get-order-follow-user/" + userId;
         const fetchData = {
             method: 'POST',
             headers:{
