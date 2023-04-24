@@ -32,9 +32,11 @@ const Header = ({ isErrorPage }: HeaderType) => {
       const token = localStorage.getItem('accessToken');
         console.log("token", token);
         const data = verifyToken(token+"");
-        if(data !== undefined)
-        setUser(data.user);
-        localStorage.setItem("dataDecoded", JSON.stringify(data));
+        if(data !== undefined){
+          setUser(data.user);
+          localStorage.setItem("dataDecoded", JSON.stringify(data));
+        }
+
         // console.log(data.user);
     }
   },[])

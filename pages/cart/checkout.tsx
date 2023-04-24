@@ -114,7 +114,7 @@ const CheckoutPage = ({thumb, name, id, color, size, count, price}: ProductStore
     return data;
   }
 
-  function dataDefaultInputOrderProduct(orderId: number, productId: number, price: number, quantity: number, color: string, size: string): InputOrderProduct {
+  function dataDefaultInputOrderProduct(orderId: number, productId: number, price: number, quantity: number, color: string, size: string, name: string, thumb: string): InputOrderProduct {
     const data = {
       order_input: {
         order_id: orderId,
@@ -122,7 +122,9 @@ const CheckoutPage = ({thumb, name, id, color, size, count, price}: ProductStore
         price: price,
         quantity: quantity,
         color: color,
-        size: size
+        size: size,
+        name: name,
+        thumb: thumb
       }
     }
     return data;
@@ -156,7 +158,7 @@ const CheckoutPage = ({thumb, name, id, color, size, count, price}: ProductStore
   async function InsertOrderProduct(orderId: number) {
     try {
       for (let i = 0; i < cartItems.length; i++) {
-        const res = await insertOrderProduct(dataDefaultInputOrderProduct(orderId, parseInt(cartItems[i].id), cartItems[i].price, cartItems[i].count, cartItems[i].color, cartItems[i].size))
+        const res = await insertOrderProduct(dataDefaultInputOrderProduct(orderId, parseInt(cartItems[i].id), cartItems[i].price, cartItems[i].count, cartItems[i].color, cartItems[i].size, cartItems[i].name, cartItems[i].thumb))
         if (res.code === 200) {
           console.log('insert success!');
         }

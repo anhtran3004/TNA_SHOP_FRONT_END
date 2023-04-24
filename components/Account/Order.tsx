@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import {getOrder} from "../../lib/Order/API";
+import {changeStatus, getOrder} from "../../lib/Order/API";
 import {Order} from "../../types";
+import Modal from "../Modal/Modal";
+import Link from "next/link";
 
 const Order = () => {
     const [activeStatus, setActiveStatus] = useState(0);
@@ -9,34 +11,51 @@ const Order = () => {
     const [listDelivering, setListDelivering] = useState<Order[]>([])
     const [listDelivered, setListDelivered] = useState<Order[]>([])
     const [listRemove, setListRemove] = useState<Order[]>([])
-
-
-    function numberWithDots(x: number) {
-        return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
-    }
     useEffect(() =>{
         async function fetchDataOrder(){
             try{
-                const res = await getOrder(activeStatus);
-                if(res.code === 200){
-                    if(activeStatus === 0){
+                if(activeStatus === 0) {
+                    const res = await getOrder(activeStatus);
+                    if (res.code === 200) {
                         setListWaiting(res.data);
-                    }else if(activeStatus === 1){
-                        setListDelivering(res.data)
-                    }else if(activeStatus === 2){
-                        setListDelivered(res.data)
-                    }else{
+                    }
+                }
+                if(activeStatus === 1) {
+                    const res = await getOrder(activeStatus);
+                    if (res.code === 200) {
+                        setListDelivering(res.data);
+                    }
+                }
+                if(activeStatus === 2) {
+                    const res = await getOrder(activeStatus);
+                    if (res.code === 200) {
+                        setListDelivered(res.data);
+                    }
+                }
+                if(activeStatus === 3) {
+                    const res = await getOrder(activeStatus);
+                    if (res.code === 200) {
                         setListRemove(res.data);
                     }
-
                 }
+
             }catch (e) {
                 console.log('error')
             }
         }
         fetchDataOrder().then();
-
-    }, [])
+    }, [activeStatus])
+    async function ChangeStatus(id: number){
+        try{
+            const res = await changeStatus(id, 3);
+            if(res.code === 200){
+                console.log('change status success!');
+                setActiveStatus(3);
+            }
+        }catch (e) {
+            console.log('error')
+        }
+    }
     return (
         <>
             <h5 className="text-order">Đơn hàng của tôi</h5>
@@ -52,24 +71,34 @@ const Order = () => {
 
                     <thead>
                     <tr>
-                        <th>STT</th>
+                        <th style={{width: "10px"}}>STT</th>
                         <th>Tên</th>
                         <th>Email</th>
                         <th>Địa chỉ</th>
                         <th>Tổng tiền</th>
-                        <th colSpan={2}>Action</th>
+                        <th colSpan={2} >Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     {listWaiting.map((waiting,  index) =>(
-                        <tr>
-                            <td>{index + 1}</td>
+                        <tr className="content-order">
+                            <td style={{width: "10px"}}>{index + 1}</td>
                             <td>{waiting.name}</td>
                             <td>{waiting.email}</td>
                             <td>{waiting.address}</td>
-                            <td>{waiting.total_price}</td>
-                            <td><button className="btn-view-detail">Xem chi tiết</button></td>
-                            <td>Hủy đơn</td>
+                            <td>{waiting.total_price.toLocaleString("vi-VN", {
+                                style: "currency",
+                                currency:"VND"
+                            })}</td>
+                            {/*<div style={{width:"180px"}}>*/}
+                                <td style={{borderRight: "none", width:"15px"}}>
+                                    <Link href={"/order-detail?orderId=" + waiting.id}>
+                                    <button className="btn-view-detail">Xem chi tiết</button>
+                                    </Link>
+                                </td>
+                                <td style={{borderLeft: "none", width:"15px"}} ><button className="btn-view-delete-order" onClick={() => ChangeStatus(waiting.id)}>Hủy đơn</button></td>
+                            {/*</div>*/}
+
                         </tr>
                     ))}
 
@@ -81,7 +110,7 @@ const Order = () => {
 
                     <thead>
                     <tr>
-                        <th>STT</th>
+                        <th style={{width: "10px"}}>STT</th>
                         <th>Tên</th>
                         <th>Email</th>
                         <th>Địa chỉ</th>
@@ -91,13 +120,23 @@ const Order = () => {
                     </thead>
                     <tbody>
                     {listDelivering.map((waiting,  index) =>(
-                        <tr>
-                            <td>{index + 1}</td>
+                        <tr className="content-order">
+                            <td style={{width: "10px"}}>{index + 1}</td>
                             <td>{waiting.name}</td>
                             <td>{waiting.email}</td>
                             <td>{waiting.address}</td>
-                            <td>{waiting.total_price}</td>
-                            <td>View Detail</td>
+                            <td>{waiting.total_price.toLocaleString("vi-VN", {
+                                style: "currency",
+                                currency:"VND"
+                            })}</td>
+                            {/*<div style={{width:"180px"}}>*/}
+                            <td style={{borderRight: "none", width:"15px"}}>
+                                <Link href={"/order-detail?orderId=" + waiting.id}>
+                                    <button className="btn-view-detail">Xem chi tiết</button>
+                                </Link>
+                            </td>
+                            {/*</div>*/}
+
                         </tr>
                     ))}
 
@@ -109,23 +148,33 @@ const Order = () => {
 
                     <thead>
                     <tr>
-                        <th>STT</th>
+                        <th style={{width: "10px"}}>STT</th>
                         <th>Tên</th>
                         <th>Email</th>
                         <th>Địa chỉ</th>
                         <th>Tổng tiền</th>
-                        <th colSpan={2}>Action</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     {listDelivered.map((waiting,  index) =>(
-                        <tr>
-                            <td>{index + 1}</td>
+                        <tr className="content-order">
+                            <td style={{width: "10px"}}>{index + 1}</td>
                             <td>{waiting.name}</td>
                             <td>{waiting.email}</td>
                             <td>{waiting.address}</td>
-                            <td>{waiting.total_price}</td>
-                            <td>Xem chi tiết</td>
+                            <td>{waiting.total_price.toLocaleString("vi-VN", {
+                                style: "currency",
+                                currency:"VND"
+                            })}</td>
+                            {/*<div style={{width:"180px"}}>*/}
+                            <td style={{borderRight: "none", width:"15px"}}>
+                                <Link href={"/order-detail?orderId=" + waiting.id}>
+                                    <button className="btn-view-detail">Xem chi tiết</button>
+                                </Link>
+                            </td>
+                            {/*<td style={{borderLeft: "none", width:"15px"}} ><button className="btn-view-delete-order">Hủy đơn</button></td>*/}
+                            {/*</div>*/}
 
                         </tr>
                     ))}
@@ -138,30 +187,44 @@ const Order = () => {
 
                     <thead>
                     <tr>
-                        <th>STT</th>
+                        <th style={{width: "10px"}}>STT</th>
                         <th>Tên</th>
                         <th>Email</th>
                         <th>Địa chỉ</th>
                         <th>Tổng tiền</th>
-                        <th>Action</th>
+                        <th colSpan={2}>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     {listRemove.map((waiting,  index) =>(
-                        <tr>
-                            <td>{index + 1}</td>
+                        <tr className="content-order">
+                            <td style={{width: "10px"}}>{index + 1}</td>
                             <td>{waiting.name}</td>
                             <td>{waiting.email}</td>
                             <td>{waiting.address}</td>
-                            <td>{waiting.total_price}</td>
-                            <td>View Detail</td>
+                            <td>{waiting.total_price.toLocaleString("vi-VN", {
+                                style: "currency",
+                                currency:"VND"
+                            })}</td>
+                            {/*<div style={{width:"180px"}}>*/}
+                            <td style={{borderRight: "none", width:"15px"}}>
+                                <Link href={"/order-detail?orderId=" + waiting.id}>
+                                    <button className="btn-view-detail">Xem chi tiết</button>
+                                </Link>
+                            </td>
+                            <td style={{borderLeft: "none", width:"15px"}} >
+                                {/*<Link href={"/product?id=" + waiting.}>*/}
+                                {/*<button className="btn-view-delete-order" style={{background: "blue"}}>Mua lại</button>*/}
+                                {/*</Link>*/}
+                            </td>
+                            {/*</div>*/}
+
                         </tr>
                     ))}
 
                     </tbody>
                 </table>
             )}
-
             <div className="page">
             </div>
         </>
