@@ -104,9 +104,6 @@ const Content = (props: ProductContent) => {
         }
     }, [itemSize])
     useEffect(() => {
-        console.log('quantity', quantity);
-    }, [quantity])
-    useEffect(() => {
         fetchDataDiscount().then();
 
     }, [props.product])
