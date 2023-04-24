@@ -197,3 +197,9 @@ export type OrderProduct = {
     name: string,
     thumb: string,
 }
+export type InputInventory = {
+    product_input:{
+        color_name: string,
+        size: string
+    }
+}

@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import QuestionAlerts from "../Alert/QuestionAlerts";
 import {useRouter} from "next/router";
 import {verifyToken} from "../../lib/passport";
+import Link from "next/link";
 
 const ShoppingCart = () => {
   const router = useRouter();
@@ -81,7 +82,10 @@ const ShoppingCart = () => {
           }
         </div>
         <div className="cart-actions">
-          <a href="/products" className="cart__btn-back"><i className="icon-left"></i> Tiếp tục mua sắm</a>
+          <Link href="/products" legacyBehavior>
+            <a className="cart__btn-back"><i className="icon-left"></i> Tiếp tục mua sắm</a>
+
+          </Link>
           {/*<input type="text" placeholder="Mã giảm giá..." className="cart__promo-code" />*/}
           <div className="cart-actions__items-wrapper">
             <p className="cart-actions__total">Tổng tiền<strong>{priceTotal().toLocaleString("vi-VN", {
