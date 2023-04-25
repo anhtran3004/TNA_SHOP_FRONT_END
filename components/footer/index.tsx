@@ -26,7 +26,7 @@ const Footer = () => {
               <li>Mua hàng online</li>
               <li><a href="#">Trạng thái đơn hàng</a></li>
               <li><a href="#">Vận chuyển và gia hàng</a></li>
-              <li><a href="#">Phản hối</a></li>
+              <li><a href="#">Phản hồi</a></li>
               <li><a href="#">Phương thức thanh toán</a></li>
               <li><a href="#">Liên hệ với chúng tôi</a></li>
             </ul>

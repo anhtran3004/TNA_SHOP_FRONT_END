@@ -7,6 +7,8 @@ import '../assets/css/campaign.css'
 import '../assets/css/account.css'
 import '../assets/css/cart.css'
 import '../assets/css/order.css'
+import '../assets/css/contact.scss'
+import 'bootstrap/dist/css/bootstrap.css';
 // types
 import type { AppProps } from 'next/app';
 

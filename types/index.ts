@@ -215,6 +215,15 @@ export type InputComment = {
         product_id: number,
     }
 }
+export type InputContact = {
+    contact_input: {
+        email: string,
+        name: string,
+        message: string,
+        subject: string,
+        phone: string
+    }
+}
 export type Comment = {
     content: string,
     rating: number,

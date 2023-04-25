@@ -87,11 +87,11 @@ const Header = ({ isErrorPage }: HeaderType) => {
           <Link href="#">
             <a href="#">Blog</a>
           </Link>
-          <Link href="#">
-            <a href="#">Contact</a>
+          <Link href="/contact" legacyBehavior>
+            <a>Contact</a>
           </Link>
-          <Link href="#">
-            <a href="#">Favorite</a>
+          <Link href="/account?favorite=true" legacyBehavior>
+            <a>Favorite</a>
           </Link>
           <button className="site-nav__btn"><p>Account</p></button>
         </nav>
