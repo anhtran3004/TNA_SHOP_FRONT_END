@@ -24,7 +24,9 @@ const RegisterPage = () => (
             <div className="form__input-row">
               <input className="form__input" placeholder="Last Name" type="text" />
             </div>
-            
+            <div className="form__input-row">
+              <input className="form__input" placeholder="User Name" type="text" />
+            </div>
             <div className="form__input-row">
               <input className="form__input" placeholder="Email" type="text" />
             </div>
@@ -32,15 +34,20 @@ const RegisterPage = () => (
             <div className="form__input-row">
               <input className="form__input" type="Password" placeholder="Password" />
             </div>
-
+            <div className="form__input-row">
+              <input className="form__input" type="Password" placeholder="Confirm Password" />
+            </div>
+            <div className="form__input-row">
+              <input className="form__input" type="text" placeholder="Address" />
+            </div>
             <div className="form__info">
-              <div className="checkbox-wrapper">
-                <label htmlFor="check-signed-in" className={`checkbox checkbox--sm`}>
-                  <input name="signed-in" type="checkbox" id="check-signed-in" />
-                  <span className="checkbox__check"></span>
-                    <p>Tôi đồng ý với Điều khoản dịch vụ và Chính sách bảo mật của Google</p>
-                </label>
-              </div>
+              {/*<div className="checkbox-wrapper">*/}
+              {/*  <label htmlFor="check-signed-in" className={`checkbox checkbox--sm`}>*/}
+              {/*    <input name="signed-in" type="checkbox" id="check-signed-in" />*/}
+              {/*    <span className="checkbox__check"></span>*/}
+              {/*      <p>Tôi đồng ý với Điều khoản dịch vụ và Chính sách bảo mật của Google</p>*/}
+              {/*  </label>*/}
+              {/*</div>*/}
             </div>
 
             <button type="button" className="btn btn--rounded btn--yellow btn-submit">Đăng ký</button>

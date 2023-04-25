@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Header from 'components/header';
 import { useRouter } from 'next/router';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Image from "next/image";
 
 type LayoutType = {
   title?: string;
@@ -23,6 +24,7 @@ export default ({ children, title = 'TNA SHOP' }: LayoutType) => {
       <main className={(pathname !== '/' ? 'main-page' : '')}>
         { children }
       </main>
+
     </div>
   )
 }

@@ -5,21 +5,29 @@ import Footer from '../components/footer';
 import Subscribe from '../components/subscribe';
 import {BlogInHome} from "../components/Home/BlogInHome";
 import {HotFeatures} from "../components/Home/HotFeatures";
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 const IndexPage = () => {
-  return (
-    <Layout>
-      <PageIntro/>
+    return (
+        <Layout>
+            <PageIntro/>
 
-      <BlogInHome/>
+            <BlogInHome/>
 
-      <HotFeatures/>
+            <HotFeatures/>
 
-      <ProductsFeatured/>
-      <Subscribe/>
-      <Footer/>
-    </Layout>
-  )
+            <ProductsFeatured/>
+            <Subscribe/>
+            <Footer/>
+            <div className="messenger-contact">
+                <Link href="">
+                    <Image src="/images/home/messenger.png" width={50} height={50}/>
+                </Link>
+            </div>
+        </Layout>
+    )
 }
 
 
