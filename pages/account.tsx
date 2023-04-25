@@ -34,6 +34,8 @@ export default function Account(){
     const router = useRouter();
     const [user, setUser] = useState<User>(dataUserDefault());
     const [statusUpdateAccount, setStatusUpdateAccount] = useState(-1)
+    // @ts-ignore
+    const favorite = router.query.favorite;
     useEffect(() => {
         if(localStorage.getItem('dataDecoded') !== undefined){
             const data = JSON.parse(localStorage.getItem('dataDecoded') + "");
@@ -45,6 +47,14 @@ export default function Account(){
         }
 
     }, [statusUpdateAccount])
+    useEffect(() =>{
+        if(favorite === 'true'){
+            setShowMenu('5');
+        }else{
+            setShowMenu('1')
+        }
+
+    }, [favorite])
     async function fetchUserData(id: number){
         try{
             const res = await getUsers(id);
