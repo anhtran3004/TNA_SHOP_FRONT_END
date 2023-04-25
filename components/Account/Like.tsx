@@ -1,40 +1,109 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Image from 'next/image'
 import { useState } from 'react';
+import ProductItem from "../product-item";
+import {getListFavorite} from "../../lib/Favorite/API";
+import {getListProduct} from "../../lib/API";
+import {Cart, InputProduct, Product} from "../../types";
+import Modal from "../Modal/Modal";
+import ErrorAlert from "../Alert/ErrorAlert";
 const Like = () => {
-    function numberWithDots(x: number) {
-        return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    const [products, setProducts] = useState<Product[]>([])
+    const [isOpenAlert, setIsOPenAlert] = useState(false);
+    const [textErrorAPI, setTextErrorAPI] = useState("");
+    const [activeHeart, setActiveHeart] = useState(false);
+    const [listProduct, setListProduct] = useState<Product[]>([]);
+    const [listCart, setListCart] = useState<Cart[]>([]);
+
+
+    function dataInputProducts(){
+        const data: InputProduct = {
+            filter: {
+                product_id: [],
+                category_id: [],
+                campaign_id: [],
+                price: {
+                    min: 0,
+                    max: 10000000
+                }
+            },
+            sort: {
+                field: "id",
+                order: "DESC"
+            },
+            pagination: {
+                page: 0,
+                perPage: 1000
+            }
+        }
+        return data;
     }
-    const [click, setClick] = useState(false);
+    useEffect(() => {
+        async function fetchProductData() {
+            try {
+                const res = await getListProduct(dataInputProducts())
+                const status = res.code;
+                if (status === 200) {
+                    setProducts(res.data);
+                } else {
+                    console.log('error');
+                    setTextErrorAPI("Không thể tải sản phẩm!")
+                    setIsOPenAlert(true);
+                }
+            } catch (e) {
+                console.log('error');
+            }
+        }
+        // console.log("statusUpdate", statusUpdate);
+        fetchProductData().then();
+    }, [])
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const res = await getListFavorite();
+                const resProduct = await getListProduct(dataInputProducts());
+                const statusCode = res.code;
+                if (statusCode === 200) {
+                    if (res.data !== null) {
+                        for (let i = 0; i < res.data.length; i++) {
+                            for (let j = 0; j < resProduct.data.length; j++) {
+                                if (res.data[i].product_id === resProduct.data[j].id) {
+                                    setListProduct((prevListProduct) => [...prevListProduct, resProduct.data[j]]);
+                                    setListCart((prevListCart) => [...prevListCart, res.data[i]]);
+                                }
+                            }
+                        }
+                    } else {
+                        setListProduct([]);
+                    }
+                } else if (statusCode === 10001) {
+                    console.log("Authentication failed");
+                    // setIsOpenLoginAlert(true);
+                } else {
+                    console.log("error");
+                    // setIsOpenLoginAlert(true);
+                }
+            } catch (e) {
+                console.log("error", e);
+                setTextErrorAPI("Lỗi! Không thể tải sản phẩm")
+                // setIsOPenAlertError(true);
+            }
+        }
+        fetchData().then();
+    }, []);
     return (
         <>
-            <h5 style={{ fontWeight: "700" }}>Sản phẩm yêu thích</h5>
-            <div className='list-products row' >
-                <div className='product' style={{ margin: "48px 14px" }}>
-                    <div className='heart' onClick={() => setClick(true)}>
-                        <i className='bx bxs-heart' ></i>
-                        <p>Yêu thích</p>
-                    </div>
-                    <div className='thumbnail-product'>
-                        <Image
-                            // loader={myLoader}
-                            src="/static/products-ar/ARISTINO_ABZ00601_PREVIEW_0.jpg"
-                            width="240"
-                            height="320"
-                            alt=""
-                        />
-                    </div>
-                    <div className='infor-product' id="l">
-                        <div className='brand'>OWEN</div>
-                        <span className={'name '}>Áo phong trắng</span>
-                        <span style={{ border: "none", borderRadius: "5px" }} >...</span>
-                        <div id="parent_p">
-                            <div className='price'>{numberWithDots(2000000)}đ</div>
-                            <div className='detail'>See-more</div>
-                        </div>
-                    </div>
-                </div>
+            <div className="list-product-in-favorite-cart">
+            {listProduct.map((product, index) =>(
+                <ProductItem product={product} />
+            ) )}
             </div>
+
+            {isOpenAlert && (
+                <Modal>
+                    <ErrorAlert textError={textErrorAPI} setIsCloseAlert={setIsOPenAlert}/>
+                </Modal>
+            )}
         </>
     )
 }

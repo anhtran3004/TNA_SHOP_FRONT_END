@@ -17,19 +17,6 @@ import {Product} from 'types';
 type ProductPageType = {
   product: ProductType;
 }
-
-// export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-//   const pid = query.pid;
-//   const res = await fetch(`${server}/api/product/${pid}`);
-//   const product = await res.json();
-//
-//   return {
-//     props: {
-//       product,
-//     },
-//   }
-// }
-
 export function dataOutputProduct(): Product {
     const data = {
         id: 0,
@@ -78,6 +65,7 @@ const Product = () => {
         fetchProductData().then();
         // fetchInventory().then();
     }, [sku])
+
   return (
     <Layout>
       <Breadcrumb />

@@ -101,6 +101,10 @@ export type Product = {
     favorite: number,
     priority: number
 }
+export type Cart = {
+    id: number
+    product_id: number
+}
 export type Inventory = {
     id: number,
     name: string,

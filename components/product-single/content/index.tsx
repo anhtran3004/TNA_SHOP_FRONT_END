@@ -5,11 +5,15 @@ import {some} from 'lodash';
 import {addProduct} from 'store/reducers/cart';
 import {Discount, InputInventory, Inventory, Product, ProductStoreType} from 'types';
 import {RootState} from 'store';
-import {getColors, getInventories, getSizes} from "../../../lib/API";
+import {getColors, getSizes} from "../../../lib/API";
 import {useRouter} from "next/router";
 import {getListDiscounts} from "../../../lib/Discount/API";
 import {GetDataDefaultDiscount} from "../../product-item";
 import {getQuantityOfInventory} from "../../../lib/Inventory/API";
+import Image from "next/image";
+import {deleteProductInFavoriteCart, getListFavorite, saveIntoFavoriteCart} from "../../../lib/Favorite/API";
+import Modal from "../../Modal/Modal";
+import QuestionAlerts from "../../Alert/QuestionAlerts";
 
 type ProductContent = {
     product: Product;
@@ -27,42 +31,34 @@ const Content = (props: ProductContent) => {
     const [isShowErrorColor, setIsShowErrorColor] = useState(false);
     const [isShowErrorSize, setIsShowErrorSize] = useState(false);
     const [isShowErrorQuantity, setIsShowErrorQuantity] = useState(false);
+    const [isOpenDeleteProductAlert, setIsOpenDeleteProductAlert] = useState(false);
+    const textError = "Hãy đăng nhập để tiến hành tính năng này?";
     const router = useRouter();
     const id = router.query.id
     const onColorSet = (e: string) => setColor(e);
     const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => setItemSize(e.target.value);
-
     const {favProducts} = useSelector((state: RootState) => state.user);
     const isFavourite = some(favProducts, productId => productId === props.product.id);
     const [colorSelected, setColorSelected] = useState("");
     const [discount, setDiscount] = useState<Discount>(GetDataDefaultDiscount())
+    const [activeHeart, setActiveHeart] = useState(false);
 
-    async function fetchInventory() {
-        try {
-            // console.log("id", id);
-            const res = await getInventories(id);
-            if (res.code === 200) {
-                setInventory(res.data);
-            }
-        } catch (e) {
-            console.log('error');
-        }
-    }
-    function defaultDataInputQuantity(color: string, itemSize: string) : InputInventory{
-        const data ={
-            product_input:{
+    function defaultDataInputQuantity(color: string, itemSize: string): InputInventory {
+        const data = {
+            product_input: {
                 color_name: color,
                 size: itemSize
             }
         }
         return data;
     }
+
     async function fetchQuantityOfInventory() {
         try {
             const res = await getQuantityOfInventory(defaultDataInputQuantity(color, itemSize), props.product.id);
             if (res.code === 200) {
                 console.log(res.data);
-                if(res.data.length > 0){
+                if (res.data.length > 0) {
                     setQuantity(res.data[0].quantity);
                 }
             }
@@ -97,29 +93,88 @@ const Content = (props: ProductContent) => {
             console.log('error')
         }
     }
+
     useEffect(() => {
         fetchQuantityOfInventory().then();
-        if(itemSize !== ''){
+        if (itemSize !== '') {
             setIsShowErrorSize(false);
         }
     }, [itemSize])
+
     //get favorite cart
-    async function getFavoriteProduct(){
-        try{
-            // const res = await
-        }catch (e) {
+    async function getFavoriteProduct() {
+        try {
+            const res = await getListFavorite();
+            if (res.code === 200) {
+                for (let i = 0; i < res.data.length; i++) {
+                    const product_id = res.data[i].product_id;
+                    if (product_id === props.product.id) {
+                        setActiveHeart(true)
+                    }
+                }
+            }
+        } catch (e) {
             console.log('error get favorite product')
+        }
+    }
+    function nextLogin() {
+        router.push('/login').then();
+    }
+    async function saveIntoCart() {
+        try {
+            const res = await saveIntoFavoriteCart(props.product.id);
+            const status = res.code;
+            console.log("response code: ", status)
+            if (status === 200) {
+                console.log("save success!");
+                getFavoriteProduct().then();
+            } else if (status === 20000) {
+                console.log("Save product already exists");
+
+            } else if (status === 401) {
+                console.log("Authentication failed");
+                setIsOpenDeleteProductAlert(true);
+                setActiveHeart(false);
+
+                // <QuestionAlert textError="Vui lòng đăng nhập!" setIsCloseAlert={} setIsAction={} index={} />
+            } else {
+                console.log("error");
+            }
+        } catch (e) {
+            console.log("error", e);
+            setIsOpenDeleteProductAlert(true);
+            // setTextErrorAPI("Lỗi, không thể thêm vào giỏ hàng yêu thích!")
+            // setIsOPenAlertError(true);
+            setActiveHeart(false);
+        }
+    }
+    async function DeleteProduct() {
+        try {
+                    const res = await deleteProductInFavoriteCart(props.product.id);
+                    const status = res.code;
+                    console.log("response code: ", status)
+                    if (status === 200) {
+                        console.log("delete success!");
+                        getFavoriteProduct().then();
+                    } else if (status === 10001) {
+                        console.log("Authentication failed");
+
+                    }
+        } catch (e) {
+            console.log("error", e);
+            // setTextErrorAPI("Không thể xóa khỏi giỏ hàng yêu thích!")
+            // setIsOPenAlertError(true);
+            setActiveHeart(true);
         }
     }
     useEffect(() => {
         fetchDataDiscount().then();
+        getFavoriteProduct().then();
 
     }, [props.product])
     useEffect(() => {
         console.log(props.product.discount_id)
-        fetchInventory().then()
         fetchListColor().then();
-
     }, [id])
 
     async function fetchListSize() {
@@ -136,17 +191,17 @@ const Content = (props: ProductContent) => {
 
     useEffect(() => {
         fetchListSize().then();
-        if(color !== ''){
+        if (color !== '') {
             setIsShowErrorColor(false);
         }
     }, [colorSelected])
     const addToCart = () => {
-        if(color === ''){
+        if (color === '') {
             console.log('missing color');
             setIsShowErrorColor(true);
             return;
         }
-        if(itemSize === ''){
+        if (itemSize === '') {
             console.log('missing size');
             setIsShowErrorSize(true);
             return;
@@ -183,18 +238,20 @@ const Content = (props: ProductContent) => {
         }
         return props.product.price;
     }
-    function handleMissingQuantity(){
+
+    function handleMissingQuantity() {
         setCount(quantity);
         setIsShowErrorQuantity(true);
-        if(itemSize === ''){
+        if (itemSize === '') {
             setIsShowErrorSize(true);
         }
-        if(color === ''){
+        if (color === '') {
             setIsShowErrorColor(true);
         }
     }
-    useEffect(() =>{
-        if(count < quantity){
+
+    useEffect(() => {
+        if (count < quantity) {
             setIsShowErrorQuantity(false);
         }
     }, [quantity, count])
@@ -280,11 +337,15 @@ const Content = (props: ProductContent) => {
                     <h5>Quantity:</h5>
                     <div className="quantity-buttons">
                         <div className="quantity-button">
-                            <button type="button" onClick={() => {(count > 1) ? setCount(count - 1) : setCount(1)}} className="quantity-button__btn">
+                            <button type="button" onClick={() => {
+                                (count > 1) ? setCount(count - 1) : setCount(1)
+                            }} className="quantity-button__btn">
                                 -
                             </button>
                             <span>{count}</span>
-                            <button type="button" onClick={() => {(count >= quantity) ? handleMissingQuantity() : setCount(count + 1)}} className="quantity-button__btn">
+                            <button type="button" onClick={() => {
+                                (count >= quantity) ? handleMissingQuantity() : setCount(count + 1)
+                            }} className="quantity-button__btn">
                                 +
                             </button>
                         </div>
@@ -292,13 +353,28 @@ const Content = (props: ProductContent) => {
                             to cart
                         </button>
                         {/*<button type="button" onClick={toggleFav} className={`btn-heart ${isFavourite ? 'btn-heart--active' : ''}`}><i className="icon-heart"></i></button>*/}
-                        <button type="button" className={`btn-heart ${isFavourite ? 'btn-heart--active' : ''}`}><i
-                            className="icon-heart"></i></button>
+                        {/*<button type="button" className={`btn-heart ${isFavourite ? 'btn-heart--active' : ''}`}><i*/}
+                        {/*    className="icon-heart"></i></button>*/}
+                        {!activeHeart ?
+                            <Image src="/images/products/add-heart.png" alt="" width={40} height={40}
+                                   onClick={() =>{setActiveHeart(true); saveIntoCart().then()}}/>
+                            :
+                            <Image src="/images/products/heart.png" alt="" width={40} height={40}
+                                   onClick={() =>{setActiveHeart(false); DeleteProduct().then()}}
+                            />
+                        }
+
 
                     </div>
                     {isShowErrorQuantity && <div style={{color: "red", marginTop: "10px"}}>Hết hàng trong kho!</div>}
                 </div>
             </div>
+            {isOpenDeleteProductAlert && (
+                <Modal>
+                    <QuestionAlerts textError={textError} setIsOpenQuestionAlert={setIsOpenDeleteProductAlert}
+                                    setOkListener={nextLogin}/>
+                </Modal>
+            )}
         </section>
     );
 };
