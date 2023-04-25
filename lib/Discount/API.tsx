@@ -1,10 +1,6 @@
 import process from "process";
+import {GetARBaseUrl} from "../API";
 
-function GetARBaseUrl(): string {
-    const url = process.env.NEXT_PUBLIC_BASE_URL;
-    if (url === undefined) return "https://a969-27-72-146-175.ngrok-free.app";
-    return url
-}
 export async function getListDiscounts(){
     try{
         const url_getListDiscount = GetARBaseUrl() + "/api/v1/discount/";

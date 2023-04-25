@@ -84,7 +84,7 @@ const Product = () => {
             </div>
 
             <Description show={showBlock === 'description'} product={products}/>
-            {/*<Reviews product={product} show={showBlock === 'reviews'} />*/}
+            <Reviews product={products} show={showBlock === 'reviews'} />
           </div>
         </div>
       </section>

@@ -46,7 +46,7 @@ export type ProductStoreType = {
     name: string;
     thumb: string;
     price: number;
-    originalPrice:number;
+    originalPrice: number;
     count: number;
     color: string;
     size: string;
@@ -203,8 +203,27 @@ export type OrderProduct = {
     thumb: string,
 }
 export type InputInventory = {
-    product_input:{
+    product_input: {
         color_name: string,
         size: string
     }
+}
+export type InputComment = {
+    comment_input: {
+        content: string,
+        rating: number,
+        product_id: number,
+    }
+}
+export type Comment = {
+    content: string,
+    rating: number,
+    product_id: number,
+    username: string,
+    user_id: number,
+    comment_date: string
+}
+export type Vote ={
+    index: number,
+    value: number
 }
