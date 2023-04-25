@@ -8,8 +8,8 @@ const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET;
 
 export const verifyToken = (token: string) => {
     try {
-        console.log(accessToken);
-        const decoded = jwt.verify(token, 'jwtabcd');
+        // console.log(accessToken);
+        const decoded = jwt.verify(token, accessToken);
         return decoded;
     }catch (e) {
         console.log('error verify token');

@@ -153,6 +153,17 @@ export type InputUser = {
         role: string
     }
 }
+export type InputInsertUser = {
+    user_input: {
+        email: string,
+        name: string,
+        phone: string,
+        address: string,
+        username: string,
+        password: string,
+        role: string
+    }
+}
 export type InputOrder = {
     order_input: {
         name: string,
