@@ -65,6 +65,8 @@ const Punctuation = (props: Props) => {
           if(res.code === 200){
               console.log('insert comment success');
               props.setStatusInsert(randomNumberInRange(1, 1000));
+              setValueComment('');
+              setRating(0);
           }
       }catch (e){
           console.log('error insert comment')
@@ -108,7 +110,7 @@ const Punctuation = (props: Props) => {
             </div>
             :
             <div className="punctuation-btn-wrapper">
-                <button type="button" className="btn btn--rounded btn--yellow" onClick={() => setIsShowAddComment(true)}>Thêm bình luận</button>
+                <button type="button" className="btn btn--rounded btn--yellow" onClick={() => {setIsShowAddComment(true); }}>Thêm bình luận</button>
             </div>
         }
 

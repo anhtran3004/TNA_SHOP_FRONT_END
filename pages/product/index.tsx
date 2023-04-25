@@ -13,6 +13,7 @@ import {getListProduct} from "../../lib/API";
 import {dataInputProduct} from "../../components/products-featured/carousel";
 import {useRouter} from "next/router";
 import {Product} from 'types';
+import {getListComment} from "../../lib/Comment/API";
 
 type ProductPageType = {
   product: ProductType;
@@ -40,8 +41,19 @@ export function dataOutputProduct(): Product {
 const Product = () => {
     const [products, setProducts] = useState<Product>(dataOutputProduct())
   const [showBlock, setShowBlock] = useState('description');
+    const [commentLength, setCommentLength] = useState(0)
   const router = useRouter();
   const sku = router.query.sku;
+    async function fetchDataComment(productId: number){
+        try{
+            const res = await getListComment(productId)
+            if(res.code === 200){
+                setCommentLength(res.data.length);
+            }
+        }catch (e){
+            console.log('error fetch comment')
+        }
+    }
     useEffect(() => {
         async function fetchProductData() {
             try {
@@ -52,6 +64,7 @@ const Product = () => {
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].sku === sku) {
                             setProducts(res.data[i]);
+                            fetchDataComment(res.data[i].id).then();
                         }
                     }
                 } else {
@@ -80,11 +93,11 @@ const Product = () => {
           <div className="product-single__info">
             <div className="product-single__info-btns">
               <button type="button" onClick={() => setShowBlock('description')} className={`btn btn--rounded ${showBlock === 'description' ? 'btn--active' : ''}`}>Mô tả</button>
-              <button type="button" onClick={() => setShowBlock('reviews')} className={`btn btn--rounded ${showBlock === 'reviews' ? 'btn--active' : ''}`}>Bình luận (2)</button>
+              <button type="button" onClick={() => setShowBlock('reviews')} className={`btn btn--rounded ${showBlock === 'reviews' ? 'btn--active' : ''}`}>Bình luận ({commentLength})</button>
             </div>
 
             <Description show={showBlock === 'description'} product={products}/>
-            <Reviews product={products} show={showBlock === 'reviews'} />
+            <Reviews product={products} show={showBlock === 'reviews'} setCommentLength={setCommentLength}/>
           </div>
         </div>
       </section>
