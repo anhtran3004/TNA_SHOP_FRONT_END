@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import CheckoutStatus from '../../components/checkout-status';
 import CheckoutItems from '../../components/checkout/items';
 import {RootState} from 'store';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getUsers} from "../../lib/User/API";
 import {InputOrder, InputOrderProduct, ProductStoreType, User} from "../../types";
 import {dataUserDefault} from "../account";
@@ -12,6 +12,7 @@ import Success from "../../components/Alert/Success";
 import Errors from "../../components/Alert/Errors";
 import {removeProduct} from "../../store/reducers/cart";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 const CheckoutPage = ({thumb, name, id, color, size, count, price, originalPrice}: ProductStoreType) => {
   const [delivery, setDelivery] = useState(0);
@@ -80,6 +81,7 @@ const CheckoutPage = ({thumb, name, id, color, size, count, price, originalPrice
     }
   }, [])
   useEffect(() => {
+    console.log(user)
     if (user.id !== dataUserDefault().id) {
       // @ts-ignore
       setValueEmail(user[0].email);
@@ -146,8 +148,6 @@ const CheckoutPage = ({thumb, name, id, color, size, count, price, originalPrice
         removeFromCart();
         setTimeout(() => router.push('/'), 3000)
       }
-
-
     } catch (e) {
       console.log('error')
       setTextErrors('Thanh toán thất bại!');
@@ -284,7 +284,9 @@ const CheckoutPage = ({thumb, name, id, color, size, count, price, originalPrice
           <div className="cart-actions cart-actions--checkout">
             <a href="/cart" className="cart__btn-back"><i className="icon-left"></i> Trở về</a>
             <div className="cart-actions__items-wrapper">
-              <button type="button" className="btn btn--rounded btn--border">Tiếp tục mua sắm</button>
+              <Link href="/products">
+                <button type="button" className="btn btn--rounded btn--border">Tiếp tục mua sắm</button>
+              </Link>
               <button type="button" className="btn btn--rounded btn--yellow" onClick={checkout}>Tiến hành thanh toán
               </button>
             </div>

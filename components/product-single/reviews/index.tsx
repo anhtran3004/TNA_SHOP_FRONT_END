@@ -1,6 +1,6 @@
 import ReviewsList from './reviews-list';
 import Punctuation from './punctuation';
-import {Comment, Product, Vote} from 'types';
+import {Comment, Product} from 'types';
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {getListComment} from "../../../lib/Comment/API";
 

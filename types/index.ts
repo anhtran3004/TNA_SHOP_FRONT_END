@@ -149,8 +149,7 @@ export type InputUser = {
         name: string,
         phone: string,
         address: string,
-        birth_date: string,
-        role: string
+        birth_date: string
     }
 }
 export type InputInsertUser = {
@@ -161,7 +160,6 @@ export type InputInsertUser = {
         address: string,
         username: string,
         password: string,
-        role: string
     }
 }
 export type InputOrder = {
@@ -219,6 +217,14 @@ export type InputInventory = {
         size: string
     }
 }
+export type InputUpdateInventory = {
+    product_input: {
+        color_name: string,
+        size: string,
+        quantity: number
+    }
+
+}
 export type InputComment = {
     comment_input: {
         content: string,
@@ -243,7 +249,7 @@ export type Comment = {
     user_id: number,
     comment_date: string
 }
-export type Vote ={
-    index: number,
-    value: number
-}
+// export type Vote ={
+//     index: number,
+//     value: number
+// }

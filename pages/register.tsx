@@ -12,12 +12,13 @@ const alertContent = () => {
     title: "Chúc Mừng!",
     text: "Đăng ký tài khoản thành công",
     icon: "success",
-    timer: 2000,
+    timer: 1000,
     timerProgressBar: true,
     showConfirmButton: false,
   });
 };
-const RegisterPage = () => {
+// @ts-ignore
+export default function Register(){
   // const [formData, setFormData] = useState<RegisterFormData>(defaultRegisterFormData());
   const [valueFirstName, setValueFirstName] = useState('')
   const [valueLastName, setValueLastName] = useState('')
@@ -53,7 +54,6 @@ const RegisterPage = () => {
         address: valueAddress,
         username: valueUsername,
         password: valuePassword,
-        role: 'user'
       }
     }
     return data
@@ -161,6 +161,3 @@ const RegisterPage = () => {
     </Layout>
   </>
 }
-  
-export default RegisterPage
-  

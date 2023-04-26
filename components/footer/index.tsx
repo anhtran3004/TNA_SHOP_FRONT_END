@@ -24,18 +24,18 @@ const Footer = () => {
           <div className="site-footer__links">
             <ul>
               <li>Mua hàng online</li>
-              <li><a href="#">Trạng thái đơn hàng</a></li>
-              <li><a href="#">Vận chuyển và gia hàng</a></li>
+              <li><a href="/account">Trạng thái đơn hàng</a></li>
+              <li><a href="/account">Vận chuyển và giao hàng</a></li>
               <li><a href="#">Phản hồi</a></li>
               <li><a href="#">Phương thức thanh toán</a></li>
-              <li><a href="#">Liên hệ với chúng tôi</a></li>
+              <li><a href="/contact">Liên hệ với chúng tôi</a></li>
             </ul>
             <ul>
               <li>Thông tin mở rộng</li>
               <li><a href="#">Thẻ đổi quà</a></li>
               <li><a href="#">Tìm kiếm của hàng offline</a></li>
               <li><a href="#">Tin tức</a></li>
-              <li><a href="#">Trở thành thành viên</a></li>
+              <li><a href="/register">Trở thành thành viên</a></li>
               <li><a href="#">Đến trang phản hồi</a></li>
             </ul>
             <ul>

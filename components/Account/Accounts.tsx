@@ -54,8 +54,7 @@ const Accounts = (props: Props) => {
                 name: valueName,
                 phone: valuePhone,
                 address: valueAddress,
-                birth_date: valueBirthDate,
-                role: valueRole
+                birth_date: valueBirthDate
             }
         }
         return data;
