@@ -7,17 +7,18 @@ import { useRouter } from 'next/router';
 import { RootState } from 'store';
 import Image from "next/image";
 import {getAccessToken, verifyToken} from "../../lib/passport";
+import {InputProduct} from "../../types";
+import {dataInputProducts} from "../../pages/products";
 const  jwt = require('jsonwebtoken');
+const _ = require('lodash');
 
 type HeaderType = {
   isErrorPage?: Boolean;
 }
-
 const Header = ({ isErrorPage }: HeaderType) => {
   const router = useRouter();
   const { cartItems } = useSelector((state: RootState)  => state.cart);
-  const arrayPaths = ['/'];  
-
+  const arrayPaths = ['/'];
   const [onTop, setOnTop] = useState(( !arrayPaths.includes(router.pathname) || isErrorPage ) ? false : true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -97,13 +98,20 @@ const Header = ({ isErrorPage }: HeaderType) => {
         </nav>
 
         <div className="site-header__actions">
-          <button ref={searchRef} className={`search-form-wrapper ${searchOpen ? 'search-form--active' : ''}`}>
-            <form className={`search-form`}>
-              <i className="icon-cancel" onClick={() => setSearchOpen(!searchOpen)}></i>
-              <input type="text" name="search" placeholder="Enter the product you are looking for" />
-            </form>  
-            <i onClick={() => setSearchOpen(!searchOpen)}  className="icon-search"></i>
-          </button>
+          {/*<button ref={searchRef} className={`search-form-wrapper ${searchOpen ? 'search-form--active' : ''}`}>*/}
+          {/*  /!*<form className={`search-form`}>*!/*/}
+          {/*  <div className="search-form">*/}
+          {/*    <i className="icon-cancel" onClick={() => setSearchOpen(!searchOpen)}></i>*/}
+          {/*    <input type="text" name="search"*/}
+          {/*           placeholder="Enter the product you are looking for"*/}
+          {/*           // onChange={(e => setSearchText(e.target.value))}*/}
+          {/*           // onKeyDown={inputListener}*/}
+
+          {/*    />*/}
+          {/*  </div>*/}
+          {/*  /!*</form>  *!/*/}
+          {/*  <i onClick={() => {setSearchOpen(!searchOpen)}}  className="icon-search"></i>*/}
+          {/*</button>*/}
           <Link href="/cart">
             <button className="btn-cart">
               <i className="icon-cart"></i>

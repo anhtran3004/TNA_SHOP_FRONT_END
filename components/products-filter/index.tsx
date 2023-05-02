@@ -24,6 +24,7 @@ interface Props {
 const ProductsFilter = (props: Props) => {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([])
+  const [searchText, setSearchText] = useState<string>("");
   useEffect(() => {
     async function fetchProductData() {
       try {
@@ -43,10 +44,11 @@ const ProductsFilter = (props: Props) => {
   const addQueryParams = () => {
     // query params changes
   }
-  // function changeCategory(e: React.ChangeEvent<HTMLInputElement>){
-  //   setIsChecked(e.target.checked);
-  //   onChange(e.target.name, e.target.checked)
-  // }
+  const inputListeners = () => {
+    const tempFilter = _.cloneDeep(props.filterProduct);
+    tempFilter.filter.search = searchText;
+    props.setFilterProduct(tempFilter);
+  }
   const handleCategoryToggle = (category: number) => {
     // @ts-ignore
     if (props.filterProduct.filter.category_id.includes(category)) {
@@ -80,6 +82,17 @@ const ProductsFilter = (props: Props) => {
       
       <div className={`products-filter__wrapper ${filtersOpen ? 'products-filter__wrapper--open' : ''}`} >
         <div className="products-filter__block">
+          <button type="button" style={{marginBottom: "15px"}}>Tìm kiếm</button>
+          <div className="search-form" style={{border:"1px solid gray", borderRadius: "16px", padding:"10px"}}>
+            <input type="text" name="search"
+                   placeholder="Search..."
+                   onChange={(e => setSearchText(e.target.value))}
+                   // onKeyDown={inputListeners}
+            />
+            <i className="icon-search" style={{cursor:"pointer"}} onClick={inputListeners}></i>
+          </div>
+        </div>
+        <div className="products-filter__block">
           <button type="button">Danh Mục Sản Phẩm</button>
           <div className="products-filter__block__content">
             {categories.map((type, index) => (
@@ -93,32 +106,6 @@ const ProductsFilter = (props: Props) => {
           <FilterPrice filterProduct={props.filterProduct} setFilterProduct={props.setFilterProduct}/>
           </div>
         </div>
-        
-        {/*<div className="products-filter__block">*/}
-        {/*  <button type="button">Size</button>*/}
-        {/*  <div className="products-filter__block__content checkbox-square-wrapper">*/}
-        {/*    {productsSizes.map(type => (*/}
-        {/*      <Checkbox */}
-        {/*        type="square" */}
-        {/*        key={type.id} */}
-        {/*        name="product-size" */}
-        {/*        label={type.label} />*/}
-        {/*    ))}*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-        
-        {/*<div className="products-filter__block">*/}
-        {/*  <button type="button">Color</button>*/}
-        {/*  <div className="products-filter__block__content">*/}
-        {/*    <div className="checkbox-color-wrapper">*/}
-        {/*      /!*{productsColors.map(type => (*!/*/}
-        {/*      /!*  <CheckboxColor key={type.id} valueName={type.color} name="product-color" color={type.color} />*!/*/}
-        {/*      /!*))}*!/*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-
-        {/*<button type="submit" className="btn btn-submit btn--rounded btn--yellow">Apply</button>*/}
       </div>
     </form>
   )

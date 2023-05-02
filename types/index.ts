@@ -67,6 +67,7 @@ export type Category = {
 }
 export type InputProduct = {
     filter: {
+        search: string,
         product_id: number[],
         category_id: number[],
         campaign_id: number[],

@@ -12,6 +12,7 @@ import ErrorAlert from "../components/Alert/ErrorAlert"
 export function dataInputProducts(){
     const data: InputProduct = {
         filter: {
+            search: "",
             product_id: [],
             category_id: [],
             campaign_id: [],

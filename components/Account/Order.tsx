@@ -74,7 +74,6 @@ const Order = () => {
         }
         return data;
     }
-    // useEffect(() => {
         async function fetchOrderProduct(orderId : number){
             try{
                 const res = await getOrderProduct(orderId);
@@ -99,8 +98,6 @@ const Order = () => {
                 console.log('error')
             }
         }
-
-    // }, [orderId])
     function defaultDataInputQuantity(colorName: string, size: string) : InputInventory{
         const data ={
             product_input:{
@@ -125,12 +122,9 @@ const Order = () => {
     // }
     async function UpdateInventory(){
         try {
-            // console.log("mmmmmmmmmm", orderId);
             for(let i = 0; i < listOrder.length; i++){
-                console.log("lllllllll", listOrder[i]);
                 const response = await getQuantityOfInventory(defaultDataInputQuantity(listOrder[i].color, listOrder[i].size), listOrder[i].product_id);
                 if(response.code === 200){
-                    console.log("quantity", response.data[0].quantity)
                     if(response.data.length > 0){
                         const res = await updateInventory(defaultDataInputInventory(listOrder[i].color, listOrder[i].size, (response.data[0].quantity - listOrder[i].quantity)), listOrder[i].product_id);
                         if(res.code === 200){
@@ -148,7 +142,6 @@ const Order = () => {
     return (
         <>
             <h5 className="text-order">Đơn hàng của tôi</h5>
-            {/*<p>Tất cả đơn hàng</p>*/}
             <div className="status-order">
                 {listStatus.map((status, index) =>(
                     <div key={index} onClick={() =>{setActiveStatus(index)}} className={(activeStatus === index) ? "status-order-active" : "status-order-item"}>{status}</div>
@@ -179,15 +172,12 @@ const Order = () => {
                                 style: "currency",
                                 currency:"VND"
                             })}</td>
-                            {/*<div style={{width:"180px"}}>*/}
                                 <td style={{borderRight: "none", width:"15px"}}>
                                     <Link href={"/order-detail?orderId=" + waiting.id}>
                                     <button className="btn-view-detail">Xem chi tiết</button>
                                     </Link>
                                 </td>
                                 <td style={{borderLeft: "none", width:"15px"}} ><button className="btn-view-delete-order" onClick={() => ChangeStatus(waiting.id, 3)}>Hủy đơn</button></td>
-                            {/*</div>*/}
-
                         </tr>
                     ))}
 
@@ -218,17 +208,13 @@ const Order = () => {
                                 style: "currency",
                                 currency:"VND"
                             })}</td>
-                            {/*<div style={{width:"180px"}}>*/}
                             <td style={{borderRight: "none", width:"15px"}}>
                                 <Link href={"/order-detail?orderId=" + waiting.id}>
                                     <button className="btn-view-detail">Xem chi tiết</button>
                                 </Link>
                             </td>
-                            <td style={{borderLeft: "none", }} ><button className="btn-view-delete-order" style={{width:"100px", background:"orange"}}
+                            <td style={{borderLeft: "none", }} ><button className="btn-view-delete-order" style={{width:"110px", background:"orange"}}
                                                                         onClick={() => ChangeStatus(waiting.id, 2)}>Đã nhận hàng</button></td>
-
-                            {/*</div>*/}
-
                         </tr>
                     ))}
 
@@ -259,14 +245,11 @@ const Order = () => {
                                 style: "currency",
                                 currency:"VND"
                             })}</td>
-                            {/*<div style={{width:"180px"}}>*/}
                             <td style={{borderRight: "none", width:"15px"}}>
                                 <Link href={"/order-detail?orderId=" + waiting.id}>
                                     <button className="btn-view-detail">Xem chi tiết</button>
                                 </Link>
                             </td>
-                            {/*</div>*/}
-
                         </tr>
                     ))}
 

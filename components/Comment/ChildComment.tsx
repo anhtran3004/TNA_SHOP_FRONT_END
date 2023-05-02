@@ -11,7 +11,6 @@ export default function ChildComponent(props: Props){
     useEffect(() => {
         async function fetchListChildCategory() {
             try {
-                console.log("id", props.commentId);
                 const res = await getChildComment(props.commentId);
                 if(res.code === 200){
                     setListChildComment(res.data);

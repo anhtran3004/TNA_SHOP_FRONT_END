@@ -32,6 +32,7 @@ type ProductsCarouselType = {
 export function dataInputProduct(): InputProduct {
   const data = {
     filter: {
+      search:"",
       product_id: [],
       category_id: [],
       campaign_id: [],

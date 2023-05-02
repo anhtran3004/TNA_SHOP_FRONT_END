@@ -28,6 +28,7 @@ export default function CampaignPage(){
     function dataInputProducts(campaignId: number): InputProduct {
         const data = {
             filter: {
+                search:"",
                 product_id: [],
                 category_id: [],
                 campaign_id: [campaignId],

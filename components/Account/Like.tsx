@@ -19,6 +19,7 @@ const Like = () => {
     function dataInputProducts(){
         const data: InputProduct = {
             filter: {
+                search:"",
                 product_id: [],
                 category_id: [],
                 campaign_id: [],
