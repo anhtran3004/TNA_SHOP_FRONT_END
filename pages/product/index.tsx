@@ -82,7 +82,6 @@ const Product = () => {
   return (
     <Layout>
       <Breadcrumb />
-
       <section className="product-single">
         <div className="container">
           <div className="product-single__content">

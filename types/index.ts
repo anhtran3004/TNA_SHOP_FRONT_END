@@ -242,12 +242,18 @@ export type InputContact = {
     }
 }
 export type Comment = {
+    id: number,
     content: string,
     rating: number,
     product_id: number,
     username: string,
     user_id: number,
-    comment_date: string
+    comment_date: string,
+}
+export type ChildComments = {
+    content: string,
+    comment_date: string,
+    comment_id: number
 }
 // export type Vote ={
 //     index: number,
