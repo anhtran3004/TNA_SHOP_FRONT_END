@@ -29,6 +29,7 @@ export default function Register(){
   const [valuePhone, setValuePhone] = useState('')
   const [valueAddress, setValueAddress] = useState('')
   const [usernameError, setUsernameError] = useState<string>('');
+  const [emailError, setEmailError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
   const router = useRouter();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
@@ -83,6 +84,19 @@ export default function Register(){
       setUsernameError('');
     }
   }
+  async function handleCheckEmail(){
+    const res = await getUsername();
+    let dem = 0;
+    for(let i = 0; i < res.data.length; i++){
+      if(res.data[i].email === valueEmail){
+        setEmailError('Email đã tồn tại');
+        dem++;
+      }
+    }
+    if(dem === 0){
+      setEmailError('');
+    }
+  }
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
     const {value} = e.target;
     if(value !== valuePassword){
@@ -121,7 +135,8 @@ export default function Register(){
                 {usernameError && <div style={{color:"red", marginLeft:"10px", marginTop:"5px"}}>{usernameError}</div>}
             </div>
             <div className="form__input-row">
-              <input className="form__input" placeholder="Email" type="email" value={valueEmail} onChange={(e) => setValueEmail(e.target.value)} required/>
+              <input className="form__input" placeholder="Email" type="email" value={valueEmail} onChange={(e) => setValueEmail(e.target.value)} onBlur={handleCheckEmail} required/>
+              {emailError && <div style={{color:"red", marginLeft:"10px", marginTop:"5px"}}>{emailError}</div>}
             </div>
               <div className="form__input-row">
                 <input className="form__input" placeholder="Phone Number" type="text" value={valuePhone} onChange={(e) => setValuePhone(e.target.value)} required/>
