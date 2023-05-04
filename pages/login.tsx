@@ -88,9 +88,9 @@ const LoginPage = () => {
               <div className="form__input-row">
                 <input 
                   className="form__input" 
-                  placeholder="email" 
+                  placeholder="username"
                   type="text" 
-                  name="email"
+                  name="username"
                   value={valueUsername}
                   onChange={(e) => setValueUsername(e.target.value)}
                   // ref={register({
@@ -116,33 +116,31 @@ const LoginPage = () => {
                   name="password"
                   value={valuePassword}
                   onChange={(e) => setValuePassword(e.target.value)}
-                  ref={register({ required: true })}
+                  required
                 />
-                {errors.password && errors.password.type === 'required' && 
-                  <p className="message message--error">This field is required</p>
-                }
+
               </div>
 
               <div className="form__info">
-                <div className="checkbox-wrapper">
-                  <label htmlFor="check-signed-in" className={`checkbox checkbox--sm`}>
-                    <input 
-                      type="checkbox" 
-                      name="keepSigned" 
-                      id="check-signed-in" 
-                      ref={register({ required: false })}
-                    />
-                    <span className="checkbox__check"></span>
-                    <p>Giữ đăng nhập</p>
-                  </label>
-                </div>
+                {/*<div className="checkbox-wrapper">*/}
+                {/*  <label htmlFor="check-signed-in" className={`checkbox checkbox--sm`}>*/}
+                {/*    <input*/}
+                {/*      type="checkbox"*/}
+                {/*      name="keepSigned"*/}
+                {/*      id="check-signed-in"*/}
+                {/*      ref={register({ required: false })}*/}
+                {/*    />*/}
+                {/*    <span className="checkbox__check"></span>*/}
+                {/*    <p>Giữ đăng nhập</p>*/}
+                {/*  </label>*/}
+                {/*</div>*/}
                 <a href="/forgot-password" className="form__info__forgot-password">Quên mật khẩu?</a>
               </div>
 
-              <div className="form__btns">
-                <button type="button" className="btn-social fb-btn"><i className="icon-facebook"></i>Facebook</button>
-                <button type="button" className="btn-social google-btn"><img src="/images/icons/gmail.svg" alt="gmail" /> Gmail</button>
-              </div>
+              {/*<div className="form__btns">*/}
+              {/*  <button type="button" className="btn-social fb-btn"><i className="icon-facebook"></i>Facebook</button>*/}
+              {/*  <button type="button" className="btn-social google-btn"><img src="/images/icons/gmail.svg" alt="gmail" /> Gmail</button>*/}
+              {/*</div>*/}
 
               <button type="submit" onClick={RunLogin} className="btn btn--rounded btn--yellow btn-submit">Đăng nhập</button>
 
