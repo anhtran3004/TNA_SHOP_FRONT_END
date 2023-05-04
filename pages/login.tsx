@@ -88,9 +88,9 @@ const LoginPage = () => {
               <div className="form__input-row">
                 <input 
                   className="form__input" 
-                  placeholder="username"
+                  placeholder="email" 
                   type="text" 
-                  name="username"
+                  name="email"
                   value={valueUsername}
                   onChange={(e) => setValueUsername(e.target.value)}
                   // ref={register({
@@ -116,18 +116,20 @@ const LoginPage = () => {
                   name="password"
                   value={valuePassword}
                   onChange={(e) => setValuePassword(e.target.value)}
-                  required
+                  ref={register({ required: true })}
                 />
-
+                {errors.password && errors.password.type === 'required' && 
+                  <p className="message message--error">This field is required</p>
+                }
               </div>
 
               <div className="form__info">
                 {/*<div className="checkbox-wrapper">*/}
                 {/*  <label htmlFor="check-signed-in" className={`checkbox checkbox--sm`}>*/}
-                {/*    <input*/}
-                {/*      type="checkbox"*/}
-                {/*      name="keepSigned"*/}
-                {/*      id="check-signed-in"*/}
+                {/*    <input */}
+                {/*      type="checkbox" */}
+                {/*      name="keepSigned" */}
+                {/*      id="check-signed-in" */}
                 {/*      ref={register({ required: false })}*/}
                 {/*    />*/}
                 {/*    <span className="checkbox__check"></span>*/}

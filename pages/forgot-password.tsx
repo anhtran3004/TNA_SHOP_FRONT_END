@@ -15,7 +15,6 @@ const ForgotPassword = () => {
   const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const [isShowOtp, setIsShowOtp] = useState(false);
-
   const onSubmit = async () => {
     try{
       const res = await forgotPassword(email);
