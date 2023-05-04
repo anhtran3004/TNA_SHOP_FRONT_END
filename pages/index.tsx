@@ -21,11 +21,11 @@ const IndexPage = () => {
             <ProductsFeatured/>
             <Subscribe/>
             <Footer/>
-            <div className="messenger-contact">
-                <Link href="">
-                    <Image src="/images/home/messenger.png" width={50} height={50}/>
-                </Link>
-            </div>
+            {/*<div className="messenger-contact">*/}
+            {/*    <Link href="">*/}
+            {/*        <Image src="/images/home/messenger.png" width={50} height={50}/>*/}
+            {/*    </Link>*/}
+            {/*</div>*/}
         </Layout>
     )
 }

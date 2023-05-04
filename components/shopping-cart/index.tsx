@@ -31,7 +31,6 @@ const ShoppingCart = () => {
       // const data = getAccessToken().then();
       // setUser(localStorage.getItem('accessToken') +"");
       const token = localStorage.getItem('accessToken');
-      console.log("token", token);
       const data = verifyToken(token+"");
       if(data !== undefined)
         setUser(data.user);

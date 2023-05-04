@@ -36,7 +36,7 @@ export default function Register(){
     e.preventDefault();
     handleCheckUsername().then(() => {
       console.log("user", usernameError)
-      if(passwordError || usernameError !== ''){
+      if(passwordError || usernameError !== '' || emailError !== ''){
         return;
       }
       console.log("submit");
