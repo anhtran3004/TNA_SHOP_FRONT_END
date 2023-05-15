@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {changeStatus, getOrder, getOrderProduct} from "../../lib/Order/API";
+import {changeStatus, getOrder, getOrderProduct, updateShippedDate} from "../../lib/Order/API";
 import {InputInventory, InputUpdateInventory, Order, OrderProduct} from "../../types";
 import Modal from "../Modal/Modal";
 import Link from "next/link";
@@ -59,9 +59,20 @@ const Order = () => {
                 setOrderId(id);
                 await fetchOrderProduct(id);
                 await UpdateInventory().then();
+                await  UpdateShippedDate(id);
             }
         }catch (e) {
             console.log('error')
+        }
+    }
+    async function UpdateShippedDate(id: number){
+        try{
+            const res = await updateShippedDate(id)
+            if(res.code === 200){
+                console.log('update success!')
+            }
+        }catch (e) {
+            console.log('Err')
         }
     }
     function defaultDataInputInventory(size: string, colorName: string, quantity: number) : InputUpdateInventory{
