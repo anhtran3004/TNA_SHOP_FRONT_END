@@ -303,20 +303,27 @@ const Content = (props: ProductContent) => {
             <div className="product-content__filters">
                 <div className="product-filter-item">
                     <h5>Color:</h5>
-                    <div className="checkbox-color-wrapper">
-                        {colors.map((type, index) => (
-                            <CheckboxColor
-                                key={index}
-                                type={'radio'}
-                                name="product-color"
-                                color={type.name}
-                                valueName={type.name}
-                                onChange={onColorSet}
-                                setColorSelected={setColorSelected}
-                            />
-                        ))}
-                    </div>
-                    {isShowErrorColor && <div style={{color: "red"}}>Bạn chưa chọn màu!</div>}
+                    {colors.length > 0 ? <>
+                        <div className="checkbox-color-wrapper">
+                            {colors.map((type, index) => (
+                                <CheckboxColor
+                                    key={index}
+                                    type={'radio'}
+                                    name="product-color"
+                                    color={type.name}
+                                    valueName={type.name}
+                                    onChange={onColorSet}
+                                    setColorSelected={setColorSelected}
+                                />
+                            ))}
+                        </div>
+                        {isShowErrorColor && <div style={{color: "red"}}>Bạn chưa chọn màu!</div>}
+                        </>
+                        :
+                        <p style={{color:"red"}}>Sản phẩm tạm hết hàng</p>
+                    }
+
+
                 </div>
                 <div className="product-filter-item">
                     <h5>Size: <strong>See size table</strong></h5>
