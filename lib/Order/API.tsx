@@ -94,3 +94,35 @@ export async function updateShippedDate(id: number){
         throw e
     }
 }
+export async function getReason(id: number){
+    try{
+        const url_getOrder = GetARBaseUrl() + "/api/v1/order/get-reason/"+id;
+        const fetchData = {
+            headers:{
+                "Content-type": "application/json"
+            },
+            method: 'POST',
+        }
+        const response = await fetch(url_getOrder, fetchData);
+        return await response.json();
+    }catch (e){
+        throw e
+    }
+}
+export async function updateReasonOrder(id: number, reason: string){
+    try{
+        const url_getOrder = GetARBaseUrl() + "/api/v1/order/update-reason-remove/"+ id;
+        const body={reason: reason}
+        const fetchData = {
+            method: 'POST',
+            headers:{
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }
+        const response = await fetch(url_getOrder, fetchData);
+        return await response.json();
+    }catch (e){
+        throw e
+    }
+}

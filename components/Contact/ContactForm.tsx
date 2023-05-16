@@ -96,7 +96,7 @@ const ContactForm = () => {
                                             <input
                                                 type="text"
                                                 name="name"
-                                                placeholder="Name"
+                                                placeholder="Họ tên"
                                                 className="form-control"
                                                 value={contact.name}
                                                 onChange={handleChange}
@@ -122,7 +122,7 @@ const ContactForm = () => {
                                             <input
                                                 type="text"
                                                 name="number"
-                                                placeholder="Phone number"
+                                                placeholder="Số điện thoại"
                                                 className="form-control"
                                                 value={contact.number}
                                                 onChange={handleChange}
@@ -135,7 +135,8 @@ const ContactForm = () => {
                                             <input
                                                 type="text"
                                                 name="subject"
-                                                placeholder="Subject"
+                                                placeholder="Chủ đề"
+                                                // placeholder="Subject"
                                                 className="form-control"
                                                 value={contact.subject}
                                                 onChange={handleChange}
@@ -149,7 +150,7 @@ const ContactForm = () => {
                           name="text"
                           cols={30}
                           rows={6}
-                          placeholder="Write your message..."
+                          placeholder="Viết tin nhắn của bạn..."
                           className="form-control"
                           value={contact.text}
                           onChange={handleChangeTextArea}
@@ -159,7 +160,7 @@ const ContactForm = () => {
                                     </div>
                                     <div className="col-lg-12 col-sm-12">
                                         <button type="submit" className="submit-btn mt-2">
-                                            Send Message!
+                                            Gửi liên hệ
                                         </button>
                                     </div>
                                 </div>

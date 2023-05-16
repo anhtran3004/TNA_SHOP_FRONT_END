@@ -4,6 +4,9 @@ import {InputInventory, InputUpdateInventory, Order, OrderProduct} from "../../t
 import Modal from "../Modal/Modal";
 import Link from "next/link";
 import {getQuantityOfInventory, updateInventory} from "../../lib/Inventory/API";
+import ReasonRemove from "../Order/ReasonRemove";
+import Success from "../Alert/Success";
+import Errors from "../Alert/Errors";
 
 const Order = () => {
     const [activeStatus, setActiveStatus] = useState(0);
@@ -14,6 +17,11 @@ const Order = () => {
     const [listRemove, setListRemove] = useState<Order[]>([]);
     const [orderId, setOrderId] = useState(-1);
     const [listOrder, setListOrder] = useState<OrderProduct[]>([])
+    const [isOpenReason, setIsOpenReason] = useState(false);
+    const [isOpenSuccess, setIsOpenSuccess] = useState(false);
+    const [isOpenError, setIsOpenError] = useState(false);
+    const [textSuccess, setTextSuccess] = useState("");
+    const [textErrors, setTextErrors] = useState("");
 
     useEffect(() =>{
         const user = JSON.parse(localStorage.getItem('dataDecoded') +"")
@@ -118,19 +126,6 @@ const Order = () => {
         }
         return data;
     }
-    // async function fetchQuantityOfInventory() {
-    //     try {
-    //         const res = await getQuantityOfInventory(defaultDataInputQuantity(), parseInt(id));
-    //         if (res.code === 200) {
-    //             console.log(res.data);
-    //             if(res.data.length > 0){
-    //                 setQuantity(res.data[0].quantity);
-    //             }
-    //         }
-    //     } catch (e) {
-    //         console.log('error get quantity');
-    //     }
-    // }
     async function UpdateInventory(){
         try {
             for(let i = 0; i < listOrder.length; i++){
@@ -185,10 +180,21 @@ const Order = () => {
                             })}</td>
                                 <td style={{borderRight: "none", width:"15px"}}>
                                     <Link href={"/order-detail?orderId=" + waiting.id}>
-                                    <button className="btn-view-detail">Xem chi tiết</button>
+                                    <button className="btn-view-detail"  style={{width:"120px", padding:"10px 0", height:"50px", margin:"0 10px"}}>
+                                        <i className="fa-solid fa-eye" style={{marginRight:"10px"}}></i>
+                                        Xem chi tiết
+                                    </button>
                                     </Link>
                                 </td>
-                                <td style={{borderLeft: "none", width:"15px"}} ><button className="btn-view-delete-order" onClick={() => ChangeStatus(waiting.id, 3)}>Hủy đơn</button></td>
+                                <td style={{borderLeft: "none", width:"15px"}} >
+                                    <button className="btn-view-delete-order" onClick={() => {
+                                        setIsOpenReason(true);
+                                        setOrderId(waiting.id);}}
+                                            style={{width:"100px", padding:"10px 0", height:"50px", marginRight:"10px"}}>
+                                        <i className="fa-solid fa-circle-xmark" style={{marginRight:"10px"}}></i>
+                                        Hủy đơn
+                                    </button>
+                                </td>
                         </tr>
                     ))}
 
@@ -310,8 +316,27 @@ const Order = () => {
                     </tbody>
                 </table>
             )}
-            <div className="page">
-            </div>
+            {isOpenReason &&
+                <ReasonRemove
+                    setIsOpenReason={setIsOpenReason}
+                    setIsOpenSuccess={setIsOpenSuccess}
+                    setTextSuccess={setTextSuccess}
+                    setIsOpenError={setIsOpenError}
+                    setTextError={setTextErrors}
+                    changeStatus={ChangeStatus}
+                    orderId={orderId}
+                />
+            }
+            {isOpenSuccess && (
+                <Modal>
+                    <Success textSuccess={textSuccess}/>
+                </Modal>
+            )}
+            {isOpenError && (
+                <Modal>
+                    <Errors textError={textErrors}/>
+                </Modal>
+            )}
         </>
     )
 }

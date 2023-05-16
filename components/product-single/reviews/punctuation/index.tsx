@@ -137,7 +137,7 @@ const Punctuation = (props: Props) => {
     return <>
         <section className="product-punctuation">
             <div className="product-punctuation__values">
-                <h3>{punctuation()}</h3>
+                <h3 >{punctuation()}</h3>
                 <Rater total={5} interactive={false} rating={punctuation()}/>
                 <p><i className="icon-avatar"></i>{props.reviews.length} all opinions</p>
             </div>

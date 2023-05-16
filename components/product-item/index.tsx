@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {useDispatch} from 'react-redux';
-import {Discount, Product} from 'types';
+import {Comment, Discount, Product} from 'types';
 import {useEffect, useState} from "react";
 import {getListDiscounts} from "../../lib/Discount/API";
 import Image from "next/image";
@@ -8,6 +8,8 @@ import {deleteProductInFavoriteCart, getListFavorite, saveIntoFavoriteCart} from
 import Modal from "../Modal/Modal";
 import QuestionAlerts from "../Alert/QuestionAlerts";
 import {useRouter} from "next/router";
+import Rater from "react-rater";
+import {getListComment} from "../../lib/Comment/API";
 
 interface Props {
     product: Product
@@ -29,6 +31,7 @@ const ProductItem = (props: Props) => {
     const [discount, setDiscount] = useState<Discount>(GetDataDefaultDiscount());
     const [isOpenDeleteProductAlert, setIsOpenDeleteProductAlert] = useState(false);
     const textError = "Hãy đăng nhập để tiến hành tính năng này?";
+    const [reviews, setReviews] = useState<Comment[]>([])
     const router = useRouter();
     useEffect(() => {
         async function fetchDataDiscount() {
@@ -48,7 +51,19 @@ const ProductItem = (props: Props) => {
 
         fetchDataDiscount().then();
     }, [props.product.id])
-
+    useEffect(() =>{
+        async function fetchDataComment(){
+            try{
+                const res = await getListComment(props.product.id)
+                if(res.code === 200){
+                    setReviews(res.data);
+                }
+            }catch (e){
+                console.log('error fetch comment')
+            }
+        }
+        fetchDataComment().then();
+    }, [])
     async function getFavoriteProduct() {
         try {
             const res = await getListFavorite();
@@ -134,7 +149,17 @@ const ProductItem = (props: Props) => {
         }
         return props.product.price;
     }
-
+    function punctuation() {
+        let data = 0;
+        if (reviews.length === 0) {
+            return 0;
+        }
+        for (let i = 0; i < reviews.length; i++) {
+            data += reviews[i].rating;
+        }
+        const result = data / reviews.length;
+        return parseFloat(result.toFixed(1));
+    }
     return (
         <div className="product-item">
             <div className="product__image">
@@ -167,13 +192,16 @@ const ProductItem = (props: Props) => {
             </div>
 
             <div className="product__description">
-                <h3>{props.product.name.length > 30 ? props.product.name.slice(0, 30) + "..." : props.product.name}</h3>
+                <h3 style={{marginBottom: "0"}}>{props.product.name.length > 30 ? props.product.name.slice(0, 30) + "..." : props.product.name}</h3>
+                <div style={{fontSize:"18px"}}>
+                    <Rater total={5} interactive={false} rating={punctuation()}/>
+                </div>
                 {(discount && discount.discount_value !== 0) ? <>
                         <h4>{calculateDiscount().toLocaleString("vi-VN", {
                             style: "currency",
                             currency: "VND"
                         })}</h4>
-                        <div style={{marginTop: "10px"}}
+                        <div style={{marginTop: "5px"}}
                              className={"product__price " + (discount ? 'product__price--discount' : '')}>{props.product.price.toLocaleString("vi-VN", {
                             style: "currency",
                             currency: "VND"

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CheckboxColor from './../../products-filter/form-builder/checkbox-color';
 import {useDispatch, useSelector} from 'react-redux';
 import {some} from 'lodash';
@@ -15,6 +15,7 @@ import {deleteProductInFavoriteCart, getListFavorite, saveIntoFavoriteCart} from
 import Modal from "../../Modal/Modal";
 import QuestionAlerts from "../../Alert/QuestionAlerts";
 import {Input} from "postcss";
+import Link from "next/link";
 
 type ProductContent = {
     product: Product;
@@ -261,19 +262,12 @@ const Content = (props: ProductContent) => {
         <section className="product-content">
             <div className="product-content__intro">
                 {/*<h5 className="product__id">Product ID:<br></br>{props.product.id}</h5>*/}
-                <span className="product-on-sale">Sale</span>
+                {((discount !== null) && discount.discount_value !== 0) &&
+                <span className="product-on-sale">{discount.discount_value}%</span>
+                }
                 <h2 className="product__name">{props.product.name}</h2>
 
                 <div className="product__prices">
-                    {/*<h4>${ product.currentPrice }</h4>*/}
-                    {/*{product.discount &&*/}
-                    {/*  <span>${ product.price }</span>*/}
-                    {/*}*/}
-                    {/*<h4>{props.product.price.toLocaleString("vi-VN", {*/}
-                    {/*  style: "currency",*/}
-                    {/*  currency:"VND"*/}
-                    {/*})}</h4>*/}
-
                     {((discount !== null) && discount.discount_value !== 0) ? <>
 
                             <h4 className={"product__price " + (discount ? 'product__price--discount' : '')}
@@ -303,7 +297,7 @@ const Content = (props: ProductContent) => {
             </div>
             <div className="product-content__filters">
                 <div className="product-filter-item">
-                    <h5>Color:</h5>
+                    <h5>Màu:</h5>
                     {colors.length > 0 ? <>
                         <div className="checkbox-color-wrapper">
                             {colors.map((type, index) => (
@@ -327,11 +321,13 @@ const Content = (props: ProductContent) => {
 
                 </div>
                 <div className="product-filter-item">
-                    <h5>Size: <strong>See size table</strong></h5>
+                    <Link href="/Blog/size">
+                        <h5>Size: <strong>Xem bảng size</strong></h5>
+                    </Link>
                     <div className="checkbox-color-wrapper">
                         <div className="select-wrapper">
                             <select onChange={onSelectChange}>
-                                <option>Choose size</option>
+                                <option>Chọn size</option>
                                 {sizes.map((type, index) => (
                                     <option key={index} value={type.size}>{type.size}</option>
                                 ))}
@@ -342,7 +338,7 @@ const Content = (props: ProductContent) => {
                     {isShowErrorSize && <div style={{color: "red", marginTop: "10px"}}>Bạn chưa chọn size!</div>}
                 </div>
                 <div className="product-filter-item">
-                    <h5>Quantity:</h5>
+                    <h5>Số lượng:</h5>
                     <div className="quantity-buttons">
                         <div className="quantity-button">
                             <button type="button" onClick={() => {
@@ -366,8 +362,8 @@ const Content = (props: ProductContent) => {
                                 +
                             </button>
                         </div>
-                        <button type="submit" onClick={() => (count > 0 ) && addToCart()} className="btn btn--rounded btn--yellow">Add
-                            to cart
+                        <button type="submit" onClick={() => (count > 0 ) && addToCart()} className="btn btn--rounded btn--yellow">
+                            Thêm vào giỏ hàng
                         </button>
                         {/*<button type="button" onClick={toggleFav} className={`btn-heart ${isFavourite ? 'btn-heart--active' : ''}`}><i className="icon-heart"></i></button>*/}
                         {/*<button type="button" className={`btn-heart ${isFavourite ? 'btn-heart--active' : ''}`}><i*/}

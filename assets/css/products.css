@@ -49,6 +49,9 @@
 .form-comment button{
     margin-top: 10px;
 }
+.react-rater-star.is-active{
+    color: var(--color-orange) !important;
+}
 
 
 /*.favorite-cart > img{*/
