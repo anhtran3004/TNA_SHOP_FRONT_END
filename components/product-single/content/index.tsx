@@ -14,6 +14,7 @@ import Image from "next/image";
 import {deleteProductInFavoriteCart, getListFavorite, saveIntoFavoriteCart} from "../../../lib/Favorite/API";
 import Modal from "../../Modal/Modal";
 import QuestionAlerts from "../../Alert/QuestionAlerts";
+import {Input} from "postcss";
 
 type ProductContent = {
     product: Product;
@@ -349,14 +350,23 @@ const Content = (props: ProductContent) => {
                             }} className="quantity-button__btn">
                                 -
                             </button>
-                            <span>{count}</span>
+                            {/*<span>{count}</span>*/}
+                            <input type="number" value={count} onChange={(e) => {
+                                (parseInt(e.target.value) <= 0) && setCount(1);
+                                (parseInt(e.target.value) >= quantity) ? handleMissingQuantity() :
+                                setCount(parseInt(e.target.value));
+                            }}
+                                   style={{width:"50px", fontSize:"18px", fontWeight:"bold", textAlign:"center"}}
+                            min="1"
+                            onBlur={() => {(count <= 0 || Number.isNaN(count)) && setCount(1); console.log("count", count)}}
+                            />
                             <button type="button" onClick={() => {
                                 (count >= quantity) ? handleMissingQuantity() : setCount(count + 1)
                             }} className="quantity-button__btn">
                                 +
                             </button>
                         </div>
-                        <button type="submit" onClick={() => addToCart()} className="btn btn--rounded btn--yellow">Add
+                        <button type="submit" onClick={() => (count > 0 ) && addToCart()} className="btn btn--rounded btn--yellow">Add
                             to cart
                         </button>
                         {/*<button type="button" onClick={toggleFav} className={`btn-heart ${isFavourite ? 'btn-heart--active' : ''}`}><i className="icon-heart"></i></button>*/}

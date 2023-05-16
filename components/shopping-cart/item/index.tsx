@@ -100,7 +100,16 @@ const ShoppingCart = ({thumb, name, id, color, size, count, price, originalPrice
             <button type="button" onClick={() => {(count > 1) ? setProductCount(count - 1) : setProductCount(1)}} className="quantity-button__btn">
                 -
             </button>
-            <span>{count}</span>
+            {/*<span>{count}</span>*/}
+            <input type="number" value={count} onChange={(e) => {
+                (parseInt(e.target.value) <= 0) && setProductCount(1);
+                (parseInt(e.target.value) >= quantity) ? handleMissingQuantity() :
+                    setProductCount(parseInt(e.target.value));
+            }}
+                   style={{width:"50px", fontSize:"18px", fontWeight:"bold", textAlign:"center"}}
+                   min="1"
+                   onBlur={() => {(count <= 0 || Number.isNaN(count)) && setProductCount(1); console.log("count", count)}}
+            />
             <button type="button" onClick={() => {(count >= quantity) ? handleMissingQuantity() : setProductCount(count + 1)}} className="quantity-button__btn">
                 +
             </button>
