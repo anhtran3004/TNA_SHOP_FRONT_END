@@ -7,6 +7,7 @@ import {getQuantityOfInventory, updateInventory} from "../../lib/Inventory/API";
 import ReasonRemove from "../Order/ReasonRemove";
 import Success from "../Alert/Success";
 import Errors from "../Alert/Errors";
+import ViewReasonRemove from "../Order/ViewReasonRemove";
 
 const Order = () => {
     const [activeStatus, setActiveStatus] = useState(0);
@@ -22,6 +23,7 @@ const Order = () => {
     const [isOpenError, setIsOpenError] = useState(false);
     const [textSuccess, setTextSuccess] = useState("");
     const [textErrors, setTextErrors] = useState("");
+    const [isOpenViewReason, setIsOpenViewReason] = useState(false);
 
     useEffect(() =>{
         const user = JSON.parse(localStorage.getItem('dataDecoded') +"")
@@ -227,7 +229,9 @@ const Order = () => {
                             })}</td>
                             <td style={{borderRight: "none", width:"15px"}}>
                                 <Link href={"/order-detail?orderId=" + waiting.id}>
-                                    <button className="btn-view-detail">Xem chi tiết</button>
+                                    <button className="btn-view-detail" style={{width:"120px", padding:"10px 0", height:"50px", margin:"0 10px"}}>
+                                        <i className="fa-solid fa-eye" style={{marginRight:"10px"}}></i>
+                                        Xem chi tiết</button>
                                 </Link>
                             </td>
                             <td style={{borderLeft: "none", }} ><button className="btn-view-delete-order" style={{width:"110px", background:"orange"}}
@@ -264,7 +268,9 @@ const Order = () => {
                             })}</td>
                             <td style={{borderRight: "none", width:"15px"}}>
                                 <Link href={"/order-detail?orderId=" + waiting.id}>
-                                    <button className="btn-view-detail">Xem chi tiết</button>
+                                    <button className="btn-view-detail" style={{width:"120px", padding:"10px 0", height:"50px", margin:"0 10px"}}>
+                                        <i className="fa-solid fa-eye" style={{marginRight:"10px"}}></i>
+                                        Xem chi tiết</button>
                                 </Link>
                             </td>
                         </tr>
@@ -298,16 +304,22 @@ const Order = () => {
                                 currency:"VND"
                             })}</td>
                             {/*<div style={{width:"180px"}}>*/}
+                            <td style={{borderRight: "none", width: "15px"}}>
+                                <button className="btn-view-confirm-order" style={{width:"170px", padding:"10px 0", height:"50px", margin:"0 10px"}}
+                                        onClick={() => {setIsOpenViewReason(true); setOrderId(waiting.id)}}
+                                >
+                                    <i className="fa-solid fa-eye" style={{marginRight:"10px"}}></i>
+                                    Xem lý do hủy đơn
+                                </button>
+                            </td>
                             <td style={{borderRight: "none", width:"15px"}}>
                                 <Link href={"/order-detail?orderId=" + waiting.id}>
-                                    <button className="btn-view-detail">Xem chi tiết</button>
+                                    <button className="btn-view-detail" style={{width:"120px", padding:"10px 0", height:"50px", margin:"0 10px"}}>
+                                        <i className="fa-solid fa-eye" style={{marginRight:"10px"}}></i>
+                                        Xem chi tiết</button>
                                 </Link>
                             </td>
-                            <td style={{borderLeft: "none", width:"15px"}} >
-                                {/*<Link href={"/product?id=" + waiting.}>*/}
-                                {/*<button className="btn-view-delete-order" style={{background: "blue"}}>Mua lại</button>*/}
-                                {/*</Link>*/}
-                            </td>
+
                             {/*</div>*/}
 
                         </tr>
@@ -316,6 +328,9 @@ const Order = () => {
                     </tbody>
                 </table>
             )}
+            {isOpenViewReason &&
+                <ViewReasonRemove setIsOpenReason={setIsOpenViewReason} orderId={orderId}/>
+            }
             {isOpenReason &&
                 <ReasonRemove
                     setIsOpenReason={setIsOpenReason}
